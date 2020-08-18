@@ -1,0 +1,8 @@
+discord.py
+python-decouple
+praw
+giphy_client
+wikipedia
+pynacl
+youtube_dl
+disputils
