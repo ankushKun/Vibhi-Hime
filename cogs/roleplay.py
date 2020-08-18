@@ -12,23 +12,27 @@ class Rp(commands.Cog):
         
     
     @commands.command()
-    async def laugh(self,ctx):
+    async def laugh(self,ctx,*,msg=None):
         i=[]
         with open('./files/roleplay/laugh.txt','r') as f:
             for each in f:
                 i.append(each)
-        em = discord.Embed(title='',description=f'{ctx.author.mention} laughs')
+        if msg==None:
+            msg=''
+        em = discord.Embed(title='',description=f'{ctx.author.mention} laughs '+msg[:])
         em.set_image(url=choice(i))
         await ctx.send(embed=em)
         
         
     @commands.command()
-    async def kill(self,ctx):
+    async def kill(self,ctx,*,msg=None):
         i=[]
         with open('./files/roleplay/kill.txt','r') as f:
             for each in f:
                 i.append(each)
-        em = discord.Embed(title='',description=f'{ctx.author.mention} kills')
+        if msg==None:
+            msg=''
+        em = discord.Embed(title='',description=f'{ctx.author.mention} kills '+msg[:])
         em.set_image(url=choice(i))
         await ctx.send(embed=em)
         
