@@ -16,10 +16,10 @@ class Fun(commands.Cog):
         
     @commands.command()
     async def gif(self,ctx):
-        q=ctx.message.content.lower().replace(config('BOT_PREFIX')+' gif','')
+        q=ctx.message.content[5:]
         print(q)
         if q == '':
-            await ctx.send('```vibhi gif <something to search>```')
+            await ctx.send('```v!gif <something to search>```')
             return
         try:
             response = api_instance.gifs_search_get(config('GIPHY_API_KEY'),q,limit=3,rating='g')
