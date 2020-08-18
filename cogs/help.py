@@ -122,9 +122,9 @@ class Help(commands.Cog):
         # MISC
         misc = discord.Embed(title="MISELLANEOUS",description="Commands that don't fit in any category",color=0x00FF00)
         misc.add_field(name="pfp",value="Shows the profile picture of a user",inline=True)
-        misc.add_field(name="say",value="Makes Uraraka say something",inline=True)
-        misc.add_field(name="invite",value="Invite link for Uraraka Chan",inline=True)
-        misc.add_field(name="stats",value="Stats for Uraraka Chan",inline=True)
+        misc.add_field(name="say",value="Makes Vibhi say something",inline=True)
+        misc.add_field(name="invite",value="Invite link for Vibhi Chan",inline=True)
+        misc.add_field(name="stats",value="Stats for Vibhi Chan",inline=True)
         # MODERATION
         mod = discord.Embed(title="MODERATION",description="Mod commands for Admins",color=0x00FF00)
         mod.add_field(name="announce",value="Sends a DM to all members of the server (use with caution)",inline=True)
