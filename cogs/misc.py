@@ -50,9 +50,9 @@ class Misc(commands.Cog):
         for i in range(0,len(svr),server_per_page):
             emb = discord.Embed(title=f"**Vibhi SERVERS [{len(svr)}]**",color=0xFF0055)
             j=i
-            while j<i+10:
+            while j<i+server_per_page:
                 try:
-                    emb.add_field(name=f'{svr[j]} [{svr[j].member_count}]',value='',inline=False)
+                    emb.add_field(name=svr[j],value=f'members : {svr[j].member_count}',inline=False)
                 except:
                     break
                 j+=1
