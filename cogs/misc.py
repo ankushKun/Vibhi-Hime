@@ -29,7 +29,7 @@ class Misc(commands.Cog):
     @commands.command()
     async def invite(self,ctx):
         emb=discord.Embed(title='INVITE **Vibhi**',color=0xFF0055)
-        inv='https://discord.com/api/oauth2/authorize?client_id=745167619253993543&permissions=536472918&scope=bot'
+        inv='[Invite link](https://discord.com/api/oauth2/authorize?client_id=745167619253993543&permissions=536472918&scope=bot)'
         emb.add_field(name="direct invite ",value=inv,inline=False)
         await ctx.send(embed=emb)
 
