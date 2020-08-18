@@ -18,7 +18,7 @@ def load_cogs():
 async def on_ready():
     print(f'---> Logged in as : {bot.user.name} , ID : {bot.user.id}')
     print(f'---> Total Servers : {len(bot.guilds)}\n')
-    activity = discord.Game(name='vibhi',type=1)
+    activity = discord.Game(name='PREFIX : v!',type=1)
     await bot.change_presence(status=discord.Status.online, activity=activity)
     load_cogs()
     print('\n---> BOT is awake\n')

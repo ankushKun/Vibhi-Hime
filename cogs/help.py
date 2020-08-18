@@ -22,7 +22,7 @@ links_str="""
 help_str="""
 **__ABOUT__**
 Hi I'm Vibhi, Official mascot of Weebee Con 2020
-Prefix(case sensitive) : ``vibhi``
+Prefix(case sensitive) : ``v!``
 
 __**SUPPORT**__
 If you find any bugs or would like to reccomend a feature [join this server](https://discord.gg/rzJGuWP)
@@ -88,7 +88,7 @@ class Help(commands.Cog):
         
         # ABOUT
         abt = discord.Embed(title="Hi I'm Vibhi",description="Official mascot of Weebee con 2020",color=0x00FF00)
-        abt.add_field(name="Prefix (case sensitive)",value="vibhi ",inline=True)
+        abt.add_field(name="Prefix (case sensitive)",value="v! ",inline=True)
         abt.add_field(name="How to use this help message",value="Add reaction to this message to scroll through the different pages",inline=True)
         abt.add_field(name="Support",value="If you find any bugs or would like to reccomend a feature join this server\nhttps://discord.gg/rzJGuWP",inline=True)
         abt.add_field(name="Vibhi Chan Invite link",value="[Invite](https://discord.com/api/oauth2/authorize?client_id=745167619253993543&permissions=536472918&scope=bot)",inline=True)
