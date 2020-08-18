@@ -16,7 +16,7 @@ class Fun(commands.Cog):
         
     @commands.command()
     async def gif(self,ctx):
-        q=ctx.message.content.replace(config('BOT_PREFIX')+' gif','')
+        q=ctx.message.content.lower().replace(config('BOT_PREFIX')+' gif','')
         print(q)
         if q == '':
             await ctx.send('```vibhi gif <something to search>```')
