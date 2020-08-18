@@ -77,12 +77,70 @@ class Help(commands.Cog):
     
     @commands.command()
     async def help(self,ctx):
+        try:
+            h = discord.Embed(title='Vibhi Chan help',description=help_str,color=0xFF0055)
+            await ctx.author.send(embed=h)
+            h = discord.Embed(title='Developer Links',description=links_str,color=0xFF0055)
+            await ctx.author.send(embed=h)
+            await ctx.send('I have DMed help to you')
+        except:
+            pass
         
-        await ctx.send('I have DMed help to you')
-        h = discord.Embed(title='Vibhi Chan help',description=help_str,color=0xFF0055)
-        await ctx.author.send(embed=h)
-        h = discord.Embed(title='Developer Links',description=links_str,color=0xFF0055)
-        await ctx.author.send(embed=h)
+        # ABOUT
+        abt = discord.Embed(title="Hi I'm Vibhi",description="Official mascot of Weebee con 2020",color=0x00FF00)
+        abt.add_field(name="Prefix (case sensitive)",value="vibhi ",inline=True)
+        abt.add_field(name="How to use this help message",value="Add reaction to this message to scroll through the different pages",inline=True)
+        abt.add_field(name="Support",value="If you find any bugs or would like to reccomend a feature join this server\nhttps://discord.gg/rzJGuWP",inline=True)
+        abt.add_field(name="Vibhi Chan Invite link",value="[Invite](https://discord.com/api/oauth2/authorize?client_id=745167619253993543&permissions=536472918&scope=bot)",inline=True)
+        # FUN
+        fun = discord.Embed(title="FUN",description="Fun Commmands",color=0x00FF00)
+        fun.add_field(name="gif",value="Search for gifs",inline=True)
+        fun.add_field(name="meme",value="Show memes",inline=True)
+        fun.add_field(name="ask",value="Ask me yes/no questions",inline=True)
+        fun.add_field(name="pun",value="Sends puns",inline=True)
+        fun.add_field(name="joke",value="Sends jokes",inline=True)
+        # ANIME
+        anime = discord.Embed(title="ANIMANGA",description="Anime and Manga Commmands",color=0x00FF00)
+        anime.add_field(name="anime",value="Anime memes and manga strips",inline=True)
+        anime.add_field(name="animegif",value="Random animegif",inline=True)
+        # GAMES
+        games = discord.Embed(title="GAMES",description="Games commands",color=0x00FF00)
+        games.add_field(name="rps",value="Play rock paper scissors",inline=True)
+        # UTIL
+        util = discord.Embed(title="UTILITIES",description="Useful Commands",color=0x00FF00)
+        util.add_field(name="wiki",value="Searches wikipedia",inline=True)
+        # MUSIC
+        music = discord.Embed(title="MUSIC",description="Music Commmands",color=0x00FF00)
+        music.add_field(name="join",value="Joins the connected VC",inline=True)
+        music.add_field(name="play",value="Plays a song",inline=True)
+        music.add_field(name="pause",value="Pauses the currently playing song",inline=True)
+        music.add_field(name="stop",value="Stops playing music",inline=True)
+        music.add_field(name="queue",value="Displays the queue",inline=True)
+        music.add_field(name="remove",value="Removes a song from the queue",inline=True)
+        music.add_field(name="shuffle",value="Shuffles the queue",inline=True)
+        music.add_field(name="skip",value="Skips the currently playing song",inline=True)
+        # MISC
+        misc = discord.Embed(title="MISELLANEOUS",description="Commands that don't fit in any category",color=0x00FF00)
+        misc.add_field(name="pfp",value="Shows the profile picture of a user",inline=True)
+        misc.add_field(name="say",value="Makes Uraraka say something",inline=True)
+        misc.add_field(name="invite",value="Invite link for Uraraka Chan",inline=True)
+        misc.add_field(name="stats",value="Stats for Uraraka Chan",inline=True)
+        # MODERATION
+        mod = discord.Embed(title="MODERATION",description="Mod commands for Admins",color=0x00FF00)
+        mod.add_field(name="announce",value="Sends a DM to all members of the server (use with caution)",inline=True)
+        mod.add_field(name="dm",value="Sends a DM to the mentioned user",inline=True)
+        mod.add_field(name="clear",value="deletes the specified amount of messages from a text channel",inline=True)
+        mod.add_field(name="ban/unban",value="bans/unbans the mentioned user",inline=True)
+        mod.add_field(name="kick",value="kicks the mentioned user",inline=True)
+        # ABOUT
+        ln = discord.Embed(title="Developer Social Links",description=links_str,color=0x00FF00)
+        
+        
+        
+        embeds = [abt,fun,anime,games,music,util,misc,mod,ln]
+
+        paginator = BotEmbedPaginator(ctx, embeds)
+        await paginator.run()
         
 
     
