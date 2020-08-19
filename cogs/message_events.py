@@ -11,9 +11,8 @@ class Message_Events(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self,msg):
         try:
-            pass
             ms = msg.content.lower()
-            print(f'->  {msg.guild.name} > {msg.channel} ||  {msg.author} : {msg.content}')
+            #print(f'->  {msg.guild.name} > {msg.channel} ||  {msg.author} : {msg.content}')
             
             
             
