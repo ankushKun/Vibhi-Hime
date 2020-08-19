@@ -66,10 +66,8 @@ class Misc(commands.Cog):
     @commands.command()
     async def updategif(self,ctx):
         try:
+            os.system('rm -r anime-rp-gifs')
             os.system('git clone https://github.com/ATCtech/anime-rp-gifs.git')
-            os.system('cd anime-rp-gifs')
-            os.system('git pull https://github.com/ATCtech/anime-rp-gifs.git')
-            os.system('cd ..')
 
             await ctx.send('OwO new Gifs')
         except Exception as e:
