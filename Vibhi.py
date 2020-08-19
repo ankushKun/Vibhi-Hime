@@ -6,7 +6,7 @@ from decouple import config
 
 print("---> BOT is waking up\n")
 
-bot = commands.Bot(command_prefix=["v!","V!","<@745167619253993543> "],case_insensitive=True)
+bot = commands.Bot(command_prefix=["v!","V!","<@745167619253993543> ",'v! ','V! '],case_insensitive=True)
 bot.remove_command('help')
 
 def load_cogs():
