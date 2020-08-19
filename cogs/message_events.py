@@ -7,16 +7,18 @@ class Message_Events(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
   
-    '''
+    
     @commands.Cog.listener()
     async def on_message(self,msg):
         try:
+            pass
             ms = msg.content.lower()
-            #print(f'->  {msg.guild.name} > {msg.channel} ||  {msg.author} : {ms}')
+            print(f'->  {msg.guild.name} > {msg.channel} ||  {msg.author} : {msg.content}')
             
             
-        except:
-            pass'''
+            
+        except Exception as e:
+            print(e)
 
     
 

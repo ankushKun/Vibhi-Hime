@@ -149,7 +149,7 @@ class Help(commands.Cog):
         paginator = BotEmbedPaginator(ctx, embeds)
         await paginator.run()
         
-
+    
     
 
 def setup(bot):
