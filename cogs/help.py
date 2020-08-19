@@ -30,10 +30,6 @@ If you find any bugs or would like to reccomend a feature [join this server](htt
 __**INVITE**__
 [Invite me to your server](https://discord.com/api/oauth2/authorize?client_id=745167619253993543&permissions=536472918&scope=bot)
 
-__**ROLEPLAY**__
-  laugh
-  kill
-  (more to be added)
 __**FUN**__
   gif
   meme
@@ -69,6 +65,7 @@ __**MODERATION**__
   ban
   unban
   kick
+__**ROLEPLAY**__
 """
 class Help(commands.Cog):
     def __init__(self,bot):
@@ -77,14 +74,23 @@ class Help(commands.Cog):
     
     @commands.command()
     async def help(self,ctx):
+        global help_str
+        rolepl=""
         try:
+            d = os.listdir('./anime-rp-gifs/')
+            d.remove('.git')
+            d.remove('README.md')
+            for c in d:
+                rolepl+=c+'\n'
+            help_str+=rolepl
+            #print(rolepl)
             h = discord.Embed(title='Vibhi Chan help',description=help_str,color=0xFF0055)
             await ctx.author.send(embed=h)
             h = discord.Embed(title='Developer Links',description=links_str,color=0xFF0055)
             await ctx.author.send(embed=h)
             await ctx.send('I have DMed help to you')
-        except:
-            pass
+        except Exception as e:
+            print(e)
         
         # ABOUT
         abt = discord.Embed(title="Hi I'm Vibhi",description="Official mascot of Weebee con 2020",color=0x00FF00)
@@ -134,10 +140,11 @@ class Help(commands.Cog):
         mod.add_field(name="kick",value="kicks the mentioned user",inline=True)
         # ABOUT
         ln = discord.Embed(title="Developer Social Links",description=links_str,color=0x00FF00)
+        # RP
+        rp = discord.Embed(title="ROLEPLAY",description=rolepl,color=0x00FF00)
         
         
-        
-        embeds = [abt,fun,anime,games,music,util,misc,mod,ln]
+        embeds = [abt,fun,rp,anime,games,music,util,misc,mod,ln]
 
         paginator = BotEmbedPaginator(ctx, embeds)
         await paginator.run()
