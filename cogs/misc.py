@@ -12,8 +12,10 @@ class Misc(commands.Cog):
         
     	
     @commands.command()
-    async def pfp(self,ctx, mn:discord.User):
-        p_emb = discord.Embed(title="@{}".format(mn.mention),color=0xFF0055)
+    async def pfp(self,ctx, mn:discord.User=None):
+        if mn==None:
+            mn=ctx.author
+        p_emb = discord.Embed(title=" ", description="{}".format(mn.mention),color=0xFF0055)
         p_emb.set_image(url=mn.avatar_url)
         await ctx.send(embed=p_emb)
   
