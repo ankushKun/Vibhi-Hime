@@ -86,9 +86,10 @@ class Help(commands.Cog):
             #print(rolepl)
             h = discord.Embed(title='Vibhi Chan help',description=help_str,color=0xFF0055)
             await ctx.author.send(embed=h)
+            await ctx.send(embed=h)
             h = discord.Embed(title='Developer Links',description=links_str,color=0xFF0055)
             await ctx.author.send(embed=h)
-            await ctx.send('I have DMed help to you')
+            await ctx.send(embed=h)
         except Exception as e:
             print(e)
         
@@ -147,7 +148,7 @@ class Help(commands.Cog):
         embeds = [abt,fun,rp,anime,games,music,util,misc,mod,ln]
 
         paginator = BotEmbedPaginator(ctx, embeds)
-        await paginator.run()
+       # await paginator.run()
         
     
     
