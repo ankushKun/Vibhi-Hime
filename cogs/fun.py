@@ -18,7 +18,7 @@ class Fun(commands.Cog):
         
     @commands.command()
     async def gif(self,ctx):
-        banned = ['boob','nigg','nude','dick','porn','ass','tit','penis']
+        banned = ['boob','nigg','nude','dick','porn','ass','tit','penis','tiddie']
         q=ctx.message.content[5:].lower()
         for ban in banned:
             if ban in q:
