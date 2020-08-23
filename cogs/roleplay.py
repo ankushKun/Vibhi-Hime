@@ -17,7 +17,6 @@ class Rp(commands.Cog):
         if 'v!' in ms:
             ms=ms[2:]
             d = os.listdir('./anime-rp-gifs/')
-            #print(ms[:ms.index(' ')])
             if ms[:ms.index(' ')] in d:
                 ms=ms[:ms.index(' ')]
                 d = os.listdir(f'./anime-rp-gifs/{ms}')
