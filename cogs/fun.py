@@ -10,24 +10,31 @@ import requests
 api_instance = giphy_client.DefaultApi()
 reddit = praw.Reddit(client_id=config('REDDIT_CLIENT_ID'),client_secret=config('REDDIT_CLIENT_SECRET'),user_agent=config('REDDIT_USER_AGENT').replace('-',' '))
 
+banned = ['boob','nigga','nude']
+
 class Fun(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
         
     @commands.command()
     async def gif(self,ctx):
-        q=ctx.message.content[5:]
-        print(q)
+        q=ctx.message.content[5:].lower()
+        for ban in banned:
+            if ban in q:
+                await ctx.send('That word is banned\nbruh')
+                return
+            
         if q == '':
             await ctx.send('```v!gif <something to search>```')
             return
+            
         try:
             response = api_instance.gifs_search_get(config('GIPHY_API_KEY'),q,limit=3,rating='g')
             lst = list(response.data)
             gif = random.choice(lst)
             await ctx.send(gif.url)
-        except ApiException as e:
-            await ctx.send(e)
+        except Exception as e:
+            await ctx.send(f'```{e}```')
         
         
     @commands.command()
