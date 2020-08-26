@@ -18,7 +18,7 @@ class Misc(commands.Cog):
         p_emb = discord.Embed(title=" ", description="{}".format(mn.mention),color=0xFF0055)
         p_emb.set_image(url=mn.avatar_url)
         await ctx.send(embed=p_emb)
-    '''
+    
     @commands.command()
     async def say(self,ctx):
         print(ctx.message.content)
@@ -26,7 +26,7 @@ class Misc(commands.Cog):
             await ctx.send(random.choice(["bruh, I'm not gonna ping everyone","You bad human, dont ping everyone!","no","I'm not your waifu anymore"]))
         else:
             await ctx.send(ctx.message.content[5:])
-            await ctx.message.delete()'''
+            await ctx.message.delete()
     
     @commands.command()
     async def invite(self,ctx):
