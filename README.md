@@ -2,7 +2,9 @@
 ![Vibhi](/files/Vibhi.png)\
 Vibhi Hime - The official mascot of Weebee Con 2020 - Indias first Online Anime Con\
 
+
 [![](https://img.shields.io/badge/INVITE-VIBHI-ff69b4)](https://discord.com/api/oauth2/authorize?client_id=746984468199374908&permissions=8&scope=bot)
+
 
 ### Command List
 - **MODERATION**
@@ -43,6 +45,7 @@ Vibhi Hime - The official mascot of Weebee Con 2020 - Indias first Online Anime 
 ### Have some suggestions for **Vibhi Chan** ?
 join our server and drop your suggestion and feedbacks\
 [![](https://img.shields.io/discord/695652747487477770?label=DISCORD&logo=discord&logoColor=white)](https://discord.gg/rzJGuWP)
+
 
 ## Connect with me
 ![GitHub followers](https://img.shields.io/github/followers/ATCtech?label=Follow%20me&logo=github&style=flat-square)
