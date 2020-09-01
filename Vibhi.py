@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import os
 from decouple import config
+from keep_alive import keep_alive
 
 
 print("---> BOT is waking up\n")
@@ -28,5 +29,5 @@ async def on_ready():
     load_cogs()
     print('\n---> BOT is awake\n')
     
-    
+keep_alive()
 bot.run(config('BOT_TOKEN'))

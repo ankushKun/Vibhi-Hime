@@ -6,3 +6,4 @@ wikipedia
 pynacl
 youtube_dl
 disputils
+flask
