@@ -1,10 +1,8 @@
 # Vibhi-Hime
 ![Vibhi](/files/Vibhi.png)\
-Vibhi Hime - The official mascot of Weebee Con 2020 - Indias first Online Anime Con\
-
+Vibhi Hime - The official mascot of Weebee Con 2020 - Indias first Online Anime Con
 
 [![](https://img.shields.io/badge/INVITE-VIBHI-ff69b4)](https://discord.com/api/oauth2/authorize?client_id=746984468199374908&permissions=8&scope=bot)
-
 
 ### Command List
 - **MODERATION**
@@ -30,7 +28,7 @@ Vibhi Hime - The official mascot of Weebee Con 2020 - Indias first Online Anime 
     - **pause**   pauses a song
     - **stop**    stops playing music
     - **loop**    loops the currently playing song
-    - **join**    makes Uraraka join a Voice Channel
+    - **join**    makes Vibhi join a Voice Channel
     - **now**     shows currently playing song
     - **queue**   shoes the song queue
     - **shuffle** shuffles the queue

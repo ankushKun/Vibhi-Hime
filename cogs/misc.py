@@ -63,15 +63,7 @@ class Misc(commands.Cog):
         paginator = BotEmbedPaginator(ctx, embeds)
         await paginator.run()
         
-    @commands.command()
-    async def updategif(self,ctx):
-        try:
-            os.system('rm -r anime-rp-gifs')
-            os.system('git clone https://github.com/ATCtech/anime-rp-gifs.git')
-
-            await ctx.send('OwO new Gifs')
-        except Exception as e:
-            await ctx.send(f'```ERROR\n{e}```')
+    
         
     
     

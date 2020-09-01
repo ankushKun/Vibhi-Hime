@@ -25,7 +25,20 @@ class Rp(commands.Cog):
                 im = discord.File(fil,filename='rp.gif')
                 em.set_image(url='attachment://rp.gif')
                 await msg.channel.send(file=im,embed=em)
-            
+
+    @commands.command()
+    async def updategif(self,ctx):
+        try:
+            if os.path.isdir('./anime-rp-gifs'):
+                os.system('cd anime-rp-gifs')
+                os.system('git pull https://github.com/ATCtech/anime-rp-gifs.git')
+                os.system('cd ..')
+            else:
+                os.system('git clone https://github.com/ATCtech/anime-rp-gifs.git')
+
+            await ctx.send('OwO new Gifs')
+        except Exception as e:
+            await ctx.send(f'```ERROR\n{e}```')        
 
         
     
