@@ -25,7 +25,7 @@ class Fun(commands.Cog):
             return
             
         try:
-            response = api_instance.gifs_search_get(config('GIPHY_API_KEY'),q,limit=3,rating='g')
+            response = api_instance.gifs_search_get(config('GIPHY_API_KEY'),q,limit=10,rating='g')
             lst = list(response.data)
             gif = random.choice(lst)
             await ctx.send(gif.url)

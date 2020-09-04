@@ -13,9 +13,7 @@ links_str="""
 [Fakebook](https://facebook.com/ankushtechcreator)
 [Reddit](https://www.reddit.com/u/TECHIE6023)
 [Fiverr](https://fiverr.com/atctech)
-
 [Discord](https://discord.gg/rzJGuWP)
-
 [Vibhi Chan Invite Link](https://discord.com/api/oauth2/authorize?client_id=746984468199374908&permissions=8&scope=bot)
 """
 
@@ -45,7 +43,7 @@ class Help(commands.Cog):
             h.add_field(name='__GAMES__',value='rps')
             h.add_field(name='__UTILITY__',value='wiki')
             h.add_field(name='__MUSIC__',value='play   pause   stop   skip   queue   join   shuffle   disconnect   remove')
-            h.add_field(name='__MISC__',value='pfp   say   invite   stats   servers')
+            h.add_field(name='__MISC__',value='afk   pfp   say   invite   stats   servers')
             h.add_field(name='__MODERATION__',value='announce   dm   clear   ban   unban   kick')
             h.add_field(name='__DEVELOPER LINKS__',value=links_str)
             await ctx.author.send(embed=h)
@@ -53,6 +51,10 @@ class Help(commands.Cog):
         except Exception as e:
             print(e)
         
+    @commands.command()
+    async def roleplay(self,ctx):
+        e=discord.Embed(title="Add roleplay commands to the bot",description="visit this github repo add add your roleplay gif in its respective folder or make one folder if it doesnot exist already\n[Anime-rp-gifs (github repo)](https://github.com/ATCtech/anime-rp-gifs)\n#Open-Sourced",color=0xFFBF00)
+        await ctx.send(embed=e)
     
     
 

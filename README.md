@@ -12,6 +12,8 @@ Vibhi Hime - The official mascot of Weebee Con 2020 - Indias first Online Anime 
     - **clear**
     - **announce** sends a dm to all members of a guild
     - **dm** sends a dm to the mentioned user
+- **ROLEPLAY**
+    - **bite dance kill run laugh cry punch nosebleed clap** *and many more*
 - **FUN**
     - **pun**   sends puns
     - **joke**  sends jokes
