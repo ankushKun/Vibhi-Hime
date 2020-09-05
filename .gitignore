@@ -2,3 +2,4 @@ __pycache__
 .env
 anime-rp-gifs
 afk.json
+node_modules
