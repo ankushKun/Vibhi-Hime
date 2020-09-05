@@ -27,11 +27,9 @@ class Help(commands.Cog):
         global help_str
         rolepl=""
         try:
-            d = os.listdir('./anime-rp-gifs/')
-            d.remove('.git')
-            d.remove('README.md')
+            d = os.listdir('./files/rp')
             for c in d:
-                rolepl+="   "+c
+                rolepl+="   "+c.replace('.txt','')
             
             h = discord.Embed(title='Vibhi Chan help',description='need help?',color=0xFFBF00)
             h.add_field(name='__ABOUT__',value="Hi I'm Vibhi, Official mascot of Weebee Con 2020\nPrefix : ``v!``")
@@ -51,10 +49,7 @@ class Help(commands.Cog):
         except Exception as e:
             print(e)
         
-    @commands.command()
-    async def roleplay(self,ctx):
-        e=discord.Embed(title="Add roleplay commands to the bot",description="visit this github repo add add your roleplay gif in its respective folder or make one folder if it doesnot exist already\n[Anime-rp-gifs (github repo)](https://github.com/ATCtech/anime-rp-gifs)\n#Open-Sourced",color=0xFFBF00)
-        await ctx.send(embed=e)
+    
     
     
 

@@ -1,6 +1,5 @@
 language = "python3"
 run = """
-npm install ffmpeg-static
 export PATH="$PWD/node_modules/ffmpeg-static:$PATH"
 python Vibhi.py
 """
