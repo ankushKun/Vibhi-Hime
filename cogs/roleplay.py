@@ -17,7 +17,7 @@ class Rp(commands.Cog):
         if 'v!' in ms:
             ms=ms[2:]
             d = os.listdir('./anime-rp-gifs/')
-            d.remove('gitignore')
+            d.remove('.gitignore')
             d.remove('.replit')
             if ms[:ms.index(' ')] in d:
                 ms=ms[:ms.index(' ')]
