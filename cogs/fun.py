@@ -1,16 +1,15 @@
 import discord
 from discord.ext import commands
 import random
-import giphy_client
-from giphy_client.rest import ApiException
 import praw
 from decouple import config
 import requests
+import json
 
-api_instance = giphy_client.DefaultApi()
 reddit = praw.Reddit(client_id=config('REDDIT_CLIENT_ID'),client_secret=config('REDDIT_CLIENT_SECRET'),user_agent=config('REDDIT_USER_AGENT').replace('-',' '))
 
-
+API_KEY = config("TENOR_KEY")
+r = requests.get(f"https://api.tenor.com/v1/anonid?&key={API_KEY}")
 
 class Fun(commands.Cog):
     def __init__(self,bot):
@@ -19,18 +18,28 @@ class Fun(commands.Cog):
     @commands.command()
     async def gif(self,ctx):
         q=ctx.message.content[5:]
-            
-        if q == '':
-            await ctx.send('```v!gif <something to search>```')
-            return
-            
-        try:
-            response = api_instance.gifs_search_get(config('GIPHY_API_KEY'),q,limit=10,rating='g')
-            lst = list(response.data)
-            gif = random.choice(lst)
-            await ctx.send(gif.url)
-        except Exception as e:
-            await ctx.send(f'```{e}```')
+        # set the apikey and limit
+        apikey = config("TENOR_KEY")  # test value
+        lmt = 10
+
+        # our test search
+        search_term = q
+
+        # get the top 8 GIFs for the search term
+        r = requests.get(
+            f"https://api.tenor.com/v1/search?q={search_term}&key={apikey}&limit={str(lmt)}&contentfilter=medium&media_filter=minimal")
+
+        if r.status_code == 200:
+            # load the GIFs using the urls for the smaller GIF sizes
+            tenorjson = json.loads(r.content)
+            urls=[]
+            for i in range(len(tenorjson["results"])):
+                url = tenorjson["results"][i]["media"][0]["tinygif"]["url"]
+                urls.append(url)
+
+            await ctx.send(random.choice(urls))
+        else:
+            tenorjson = None
         
         
     @commands.command()
@@ -52,7 +61,7 @@ class Fun(commands.Cog):
     async def ask(self,ctx):
         response =['Yes of Course','Oh Yeah','Yep','Without a doubt',
                    'Nopee','Noooooo','Nuo','Na','-_-',
-                   'idk','I cant tell now','How should I know']
+                   'idk','I cant tell now','How should I know','meh','that was a shitty question']
         await ctx.send(random.choice(response))
         
         

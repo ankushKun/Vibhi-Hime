@@ -4,8 +4,9 @@ import urllib
 from os import chdir, getcwd, mkdir
 import os.path
 from os import path
+from decouple import config
 
-API_KEY = "M9YAESOTVOLX"
+API_KEY = config("TENOR_KEY")
 
 r = requests.get(f"https://api.tenor.com/v1/anonid?&key={API_KEY}")
 
