@@ -7,6 +7,7 @@ import json
 from os import chdir, getcwd, mkdir
 import os.path
 from os import path
+from decouple import config
 
 
 
@@ -41,70 +42,74 @@ class Rp(commands.Cog):
                 )"""
 
     @commands.command()
-    async def updategif(self,ctx,amt=25):
-        await ctx.send('updating ...')
-        API_KEY = "M9YAESOTVOLX"
+    async def updaterp(self,ctx,amt=10):
+        if ctx.author.id == 666578281142812673:
+            await ctx.send('updating ...')
+            API_KEY = config("TENOR_KEY")
 
-        r = requests.get(f"https://api.tenor.com/v1/anonid?&key={API_KEY}")
+            r = requests.get(f"https://api.tenor.com/v1/anonid?&key={API_KEY}")
 
-        rp = ['laugh','smile','cry','sad','run','punch','kill','kick','lick','poke','pat','hug','shoot','stare','die','chase']
-
-        if r.status_code == 200:
-            with open("anon_id.txt", "a+") as f:
-                if f.read() == "":
-                    r = requests.get(f"https://api.tenor.com/v1/anonid?&key={API_KEY}")
-                    anon_id = json.loads(r.content)["anon_id"]
-                    f.write(anon_id)
-                else:
-                    anon_id = f.read()
-                    mkdir("media")
-        else:
-            print("Failed Connection, Please try again")
-            exit()
-
-        #chdir(getcwd() + "\\media")
-        for rp_c in rp:
-            limit = amt
-            search_term = rp_c
-            filetype = "gif"
-
-            if filetype ==  "h":
-                print("Currently supported filetypes:")
-                print("-gif")
-                print("-mp4")
-                print("-webm")
-                
-                filetype = input("Filetype: ")
-            search="anime "+search_term
-            r = requests.get(f"https://api.tenor.com/v1/search?q={search}&key={API_KEY}&limit={limit}&anon_id={anon_id}")
+            with open('files/rp_cmd.txt','r') as f:
+                rp=f.read().split('\n')
+            #rp = ['laugh','smile','cry','sad','run','punch','kill','kick','lick','poke','pat','hug','shoot','stare','die','chase']
 
             if r.status_code == 200:
-                tenorjson = json.loads(r.content)
-                l=""
-                for i in range(len(tenorjson["results"])):
-                    url = tenorjson["results"][i]["media"][0][filetype]["url"]
-                    l+=url+"\n"
+                with open("anon_id.txt", "a+") as f:
+                    if f.read() == "":
+                        r = requests.get(f"https://api.tenor.com/v1/anonid?&key={API_KEY}")
+                        anon_id = json.loads(r.content)["anon_id"]
+                        f.write(anon_id)
+                    else:
+                        anon_id = f.read()
+                        mkdir("media")
+            else:
+                print("Failed Connection, Please try again")
+                exit()
+
+            #chdir(getcwd() + "\\media")
+            for rp_c in rp:
+                limit = amt
+                search_term = rp_c
+                filetype = "gif"
+
+                if filetype ==  "h":
+                    print("Currently supported filetypes:")
+                    print("-gif")
+                    print("-mp4")
+                    print("-webm")
                     
-                if not path.isdir('files'): os.system('mkdir files')
-                if not path.isdir('files/rp'): os.system('mkdir files/rp')
-                with open(f'./files/rp/{search_term}.txt','w') as f:f.write(l)
+                    filetype = input("Filetype: ")
+                search="anime "+search_term
+                r = requests.get(f"https://api.tenor.com/v1/search?q={search}&key={API_KEY}&limit={limit}&anon_id={anon_id}")
+
+                if r.status_code == 200:
+                    tenorjson = json.loads(r.content)
+                    l=""
+                    for i in range(len(tenorjson["results"])):
+                        url = tenorjson["results"][i]["media"][0][filetype]["url"]
+                        l+=url+"\n"
+                        
+                    if not path.isdir('files'): os.system('mkdir files')
+                    if not path.isdir('files/rp'): os.system('mkdir files/rp')
+                    with open(f'./files/rp/{search_term}.txt','w') as f:f.write(l)
 
 
-            else:
-                tenorjson = None
-                print("Failed connection Please Try Again")
+                else:
+                    tenorjson = None
+                    print("Failed connection Please Try Again")
+                    continue
+                
+                await ctx.send(f"``{search_term} updated``")
                 continue
-            
-            await ctx.send(f"> {search_term} done")
-            continue
-            
-            if input("Would you like to download any more files[Y or N]: ").upper() == "Y":
-                continue
-            else:
-                #print("Thank you for using TenorDownloader.py")
-                break    
-        await ctx.send('OwO new gifs')         
-
+                
+                if input("Would you like to download any more files[Y or N]: ").upper() == "Y":
+                    continue
+                else:
+                    #print("Thank you for using TenorDownloader.py")
+                    break    
+            await ctx.send('OwO new gifs')         
+        else :
+            print(f"{ctx.author.name}({ctx.author.id}) tried to use updategif command")
     @commands.command(aliases=['rp'])
     async def roleplay(self,ctx):
         rolepl=""
@@ -117,7 +122,14 @@ class Rp(commands.Cog):
         e=discord.Embed(title="Roleplay commands",description=f"{rolepl}",color=0xFF0055)
         await ctx.send(embed=e)
     
-    
+    @commands.command()
+    async def addrp(self,ctx,*,cmd):
+        if ctx.author.id == 666578281142812673:
+            with open('files/rp_cmd.txt','a') as f:
+                f.write("\n"+cmd)
+                await ctx.send(f'> added {cmd}')
+        else :
+            print(f"{ctx.author.name}({ctx.author.id}) tried to use addrp command")
 
 def setup(bot):
     bot.add_cog(Rp(bot))

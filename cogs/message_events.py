@@ -11,12 +11,12 @@ class Message_Events(commands.Cog):
     
     def load_afk(self):
         global data
-        with open('afk.json','r') as f:
+        with open('files/afk.json','r') as f:
             data = json.loads(f.read())
 
     def write_afk(self,d={}):
         global data
-        with open('afk.json','w') as f:
+        with open('files/afk.json','w') as f:
             f.write(json.dumps(d))
 
     

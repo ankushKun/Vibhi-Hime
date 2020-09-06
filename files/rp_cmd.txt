@@ -1,0 +1,16 @@
+laugh
+smile
+cry
+sad
+run
+punch
+kill
+kick
+lick
+poke
+pat
+hug
+shoot
+stare
+die
+chase
