@@ -48,6 +48,12 @@ class Message_Events(commands.Cog):
                     self.write_afk(data)
                     msg_afk=f"**{ping.display_name}** is AFK\n\n{data[user][1]}"
                     await msg.channel.send(msg_afk)
+        user=str(msg.author.id)
+        prefixes = self.get_prefix(user)
+        for pfix in prefixes:
+            if msg.content.startswith(pfix):
+                msg.content = msg.content.replace(pfix,'v!').replace('v! ','v!')
+                await self.bot.process_commands(msg)
 
     def get_prefix(self,id):
         try:

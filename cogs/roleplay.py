@@ -14,9 +14,25 @@ from decouple import config
 class Rp(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
-        
+    
+    def get_prefix(self,id):
+        try:
+            with open('files/prefixes.json','r')as f:
+                l= json.loads(f.read())
+                if id in l:
+                    return l[id]
+                else: return []
+        except:
+            pass
+            
     @commands.Cog.listener()
     async def on_message(self,msg):
+        user=str(msg.author.id)
+        prefixes = self.get_prefix(user)
+        for pfix in prefixes:
+            if msg.content.startswith(pfix):
+                msg.content = msg.content.replace(pfix,'v!').replace('v! ','v!')
+                #await self.bot.process_commands(msg)
         ms= msg.content.lower()
         ms+=' '
         if 'v!' in ms:
