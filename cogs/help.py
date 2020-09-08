@@ -41,16 +41,20 @@ class Help(commands.Cog):
             h.add_field(name='__GAMES__',value='rps')
             h.add_field(name='__UTILITY__',value='wiki')
             h.add_field(name='__MUSIC__',value='play   pause   stop   skip   queue   join   shuffle   disconnect   remove')
-            h.add_field(name='__MISC__',value='afk   pfp   say   invite   stats   servers')
+            h.add_field(name='__MISC__',value='afk   pfp   say   invite   stats   servers   about')
             h.add_field(name='__MODERATION__',value='announce   dm   clear   ban   unban   kick')
-            h.add_field(name='__DEVELOPER LINKS__',value=links_str)
-            await ctx.author.send(embed=h)
+            #h.add_field(name='__DEVELOPER LINKS__',value=links_str)
+            #await ctx.author.send(embed=h)
             await ctx.send(embed=h)
         except Exception as e:
             print(e)
         
     
-    
+    @commands.command()
+    async def about(self,ctx):
+        h = discord.Embed(title='About Vibhi Chan',description='I am Vibhi, the official mascot of weebee con - Indias first anime con.\nDeveloped by : ``weeblet~kun#1193``',color=0xFFBF00)
+        h.add_field(name='__DEVELOPER LINKS__',value=links_str)
+        await ctx.send(embed=h)
     
 
 def setup(bot):

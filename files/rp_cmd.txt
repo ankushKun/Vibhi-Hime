@@ -14,3 +14,7 @@ shoot
 stare
 die
 chase
+party
+cuddle
+nosebleed
+dodge

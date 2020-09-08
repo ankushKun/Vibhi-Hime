@@ -39,7 +39,7 @@ class Misc(commands.Cog):
     async def stats(self,ctx):
         emb = discord.Embed(title="**Vibhi STATS**",color=0xFF0055)
         emb.add_field(name="Total Servers",value=str(len(self.bot.guilds)),inline=False)
-        emb.add_field(name="Latency(ms)",value=str(round(self.bot.latency,1)),inline=False)
+        emb.add_field(name="Latency(s)",value=str(round(self.bot.latency,3)),inline=False)
         emb.add_field(name=f"{ctx.guild} members",value=f'{ctx.guild.member_count}',inline=False)
         await ctx.send(embed=emb)
         

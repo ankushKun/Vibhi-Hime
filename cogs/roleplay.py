@@ -26,9 +26,9 @@ class Rp(commands.Cog):
             if filename in d:
                 with open(f'./files/rp/{filename}','r') as f:
                     urls=f.read().split('\n')
-                gif=choice(urls)
+                gif=choice(urls[:-1])
                 print(ms)
-                em = discord.Embed(title='',description=f'{msg.author.mention} {ms[:ms.index(" ")]}s{ms[ms.index(" "):]}',color=0xFF0055)
+                em = discord.Embed(title='',description=f'{msg.author.mention} {ms[:ms.index(" ")]}{ms[ms.index(" "):]}',color=0xFF0055)
                 em.set_image(url=gif)
                 await msg.channel.send(embed=em)
             """
@@ -42,17 +42,25 @@ class Rp(commands.Cog):
                 )"""
 
     @commands.command()
-    async def updaterp(self,ctx,amt=10):
+    async def updaterp(self,ctx,which='',amt=5):
         if ctx.author.id == 666578281142812673:
-            await ctx.send('updating ...')
+            if which=='':
+                await ctx.send('all : update all\n<rp name> : update <rp name> only')
+                return
+            
+
+            
             API_KEY = config("TENOR_KEY")
 
             r = requests.get(f"https://api.tenor.com/v1/anonid?&key={API_KEY}")
-
-            with open('files/rp_cmd.txt','r') as f:
-                rp=f.read().split('\n')
-            #rp = ['laugh','smile','cry','sad','run','punch','kill','kick','lick','poke','pat','hug','shoot','stare','die','chase']
-
+            if which =='all':
+                with open('files/rp_cmd.txt','r') as f:
+                    rp=f.read().split('\n')
+                await ctx.send('updating all ...')
+            else:
+                rp=[which]
+                await ctx.send(f'updating {which} ...')
+            
             if r.status_code == 200:
                 with open("anon_id.txt", "a+") as f:
                     if f.read() == "":
