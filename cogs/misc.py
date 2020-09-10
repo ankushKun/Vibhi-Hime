@@ -25,8 +25,9 @@ class Misc(commands.Cog):
         if "everyone" in ctx.message.content or "here" in ctx.message.content:
             await ctx.send(random.choice(["bruh, I'm not gonna ping everyone","You bad human, dont ping everyone!","no","I'm not your waifu anymore"]))
         else:
-            await ctx.send(ctx.message.content[5:])
-            await ctx.message.delete()
+            #await ctx.send(ctx.message.content[5:])
+            #await ctx.message.delete()
+            pass
     
     @commands.command()
     async def invite(self,ctx):

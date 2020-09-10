@@ -41,7 +41,7 @@ class Help(commands.Cog):
             h.add_field(name='__GAMES__',value='rps')
             h.add_field(name='__UTILITY__',value='wiki')
             h.add_field(name='__MUSIC__',value='play   pause   stop   skip   queue   join   shuffle   disconnect   remove')
-            h.add_field(name='__MISC__',value='afk   pfp   say   invite   stats   servers   about')
+            h.add_field(name='__MISC__',value='afk   pfp   say   invite   stats   servers   about   prefix')
             h.add_field(name='__MODERATION__',value='announce   dm   clear   ban   unban   kick')
             #h.add_field(name='__DEVELOPER LINKS__',value=links_str)
             #await ctx.author.send(embed=h)

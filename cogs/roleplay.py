@@ -44,7 +44,7 @@ class Rp(commands.Cog):
                     urls=f.read().split('\n')
                 gif=choice(urls[:-1])
                 print(ms)
-                em = discord.Embed(title='',description=f'{msg.author.mention} {ms[:ms.index(" ")]}{ms[ms.index(" "):]}',color=0xFF0055)
+                em = discord.Embed(title='',description=f'{msg.author.mention} {ms[:ms.index(" ")]}s{ms[ms.index(" "):]}',color=0xFF0055)
                 em.set_image(url=gif)
                 await msg.channel.send(embed=em)
             """
@@ -58,24 +58,17 @@ class Rp(commands.Cog):
                 )"""
 
     @commands.command()
-    async def updaterp(self,ctx,which='',amt=5):
+    async def updaterp(self,ctx,amt=5):
         if ctx.author.id == 666578281142812673:
-            if which=='':
-                await ctx.send('all : update all\n<rp name> : update <rp name> only')
-                return
-            
-
             
             API_KEY = config("TENOR_KEY")
 
             r = requests.get(f"https://api.tenor.com/v1/anonid?&key={API_KEY}")
-            if which =='all':
-                with open('files/rp_cmd.txt','r') as f:
-                    rp=f.read().split('\n')
-                await ctx.send('updating all ...')
-            else:
-                rp=[which]
-                await ctx.send(f'updating {which} ...')
+            
+            with open('files/rp_cmd.txt','r') as f:
+                rp=f.read().split('\n')
+            await ctx.send('updating all ...')
+            
             
             if r.status_code == 200:
                 with open("anon_id.txt", "a+") as f:
@@ -87,8 +80,8 @@ class Rp(commands.Cog):
                         anon_id = f.read()
                         mkdir("media")
             else:
-                print("Failed Connection, Please try again")
-                exit()
+                await ctx.send("Failed Connection, Please try again")
+                return
 
             #chdir(getcwd() + "\\media")
             for rp_c in rp:
@@ -120,10 +113,10 @@ class Rp(commands.Cog):
 
                 else:
                     tenorjson = None
-                    print("Failed connection Please Try Again")
+                    await ctx.send("Failed connection Please Try Again")
                     continue
                 
-                await ctx.send(f"``{search_term} updated``")
+                #await ctx.send(f"``{search_term} updated``")
                 continue
                 
                 if input("Would you like to download any more files[Y or N]: ").upper() == "Y":

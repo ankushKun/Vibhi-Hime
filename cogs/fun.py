@@ -35,8 +35,11 @@ class Fun(commands.Cog):
             urls=[]
             for i in range(len(tenorjson["results"])):
                 url = tenorjson["results"][i]["media"][0]["tinygif"]["url"]
+                
                 urls.append(url)
-
+            if urls==[]:
+                await ctx.send(f"can't find any gifs related to {search_term}")
+                return
             await ctx.send(random.choice(urls))
         else:
             tenorjson = None

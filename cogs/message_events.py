@@ -32,7 +32,7 @@ class Message_Events(commands.Cog):
             if tag in data:
                 #e=discord.Embed(title="REMOVED YOUR AFK",description=f"{msg.author.mention} your status was\n\n{data[tag]}",color=0xFF0055)
                 #await msg.channel.send(embed=e)
-                no_more_afk=f"welcome back {msg.author.mention}, you are no more AFK.\n__{data[tag][1]}__.\nYou were pinged __{data[tag][0]}__ times."
+                no_more_afk=f"welcome back {msg.author.mention}.\n__{data[tag][1]}__.\nYou were pinged __{data[tag][0]}__ times."
                 await msg.channel.send(no_more_afk)
                 del data[tag]
                 self.write_afk(data)
@@ -82,14 +82,6 @@ class Message_Events(commands.Cog):
             f.write(json.dumps(l))
 
 
-    @commands.Cog.listener()
-    async def on_message(self,msg):
-        user=str(msg.author.id)
-        prefixes = self.get_prefix(user)
-        for pfix in prefixes:
-            if msg.content.startswith(pfix):
-                msg.content = msg.content.replace(pfix,'v!').replace('v! ','v!')
-                await self.bot.process_commands(msg)
     
     @commands.command()
     async def prefix(self,ctx,do='',prfx=''):

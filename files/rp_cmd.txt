@@ -18,3 +18,5 @@ party
 cuddle
 nosebleed
 dodge
+dance
+nom
