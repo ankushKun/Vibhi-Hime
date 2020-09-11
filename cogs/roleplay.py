@@ -43,19 +43,10 @@ class Rp(commands.Cog):
                 with open(f'./files/rp/{filename}','r') as f:
                     urls=f.read().split('\n')
                 gif=choice(urls[:-1])
-                print(ms)
                 em = discord.Embed(title='',description=f'{msg.author.mention} {ms[:ms.index(" ")]}s{ms[ms.index(" "):]}',color=0xFF0055)
                 em.set_image(url=gif)
                 await msg.channel.send(embed=em)
-            """
-            if ms[:ms.index(' ')] in d:
-                ms=ms[:ms.index(' ')]
-                d = os.listdir(f'./anime-rp-gifs/{ms}')
-                fil=f'./anime-rp-gifs/{ms}/'+choice(d)
-                
-                im = discord.File(fil,filename='rp.gif')
-                em.set_image(url='attachment://rp.gif')
-                )"""
+           
 
     @commands.command()
     async def updaterp(self,ctx,amt=5):

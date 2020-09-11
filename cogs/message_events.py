@@ -30,8 +30,6 @@ class Message_Events(commands.Cog):
             tag=guild_id+user_id
             self.load_afk()
             if tag in data:
-                #e=discord.Embed(title="REMOVED YOUR AFK",description=f"{msg.author.mention} your status was\n\n{data[tag]}",color=0xFF0055)
-                #await msg.channel.send(embed=e)
                 no_more_afk=f"welcome back {msg.author.mention}.\n__{data[tag][1]}__.\nYou were pinged __{data[tag][0]}__ times."
                 await msg.channel.send(no_more_afk)
                 del data[tag]
@@ -42,8 +40,6 @@ class Message_Events(commands.Cog):
             guild_id=str(msg.guild.id)
             for user in data:
                 if user == guild_id+str(ping.id):
-                    #e=discord.Embed(title="",description=f"{ping.mention} is AFK\n\n{data[user]}",color=0xFF0055)
-                    #await msg.channel.send(embed=e)
                     data[user][0]+=1
                     self.write_afk(data)
                     msg_afk=f"**{ping.display_name}** is AFK\n\n{data[user][1]}"
@@ -58,12 +54,12 @@ class Message_Events(commands.Cog):
     def get_prefix(self,id):
         try:
             with open('files/prefixes.json','r')as f:
-                l= json.loads(f.read())
+                l = json.loads(f.read())
                 if id in l:
                     return l[id]
                 else: return []
-        except:
-            pass
+        except Exception as e:
+            print(e)
 
     def add_prefix(self,id,pf):
         with open('files/prefixes.json','r')as f:
