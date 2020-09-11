@@ -86,7 +86,14 @@ class Message_Events(commands.Cog):
     @commands.command()
     async def prefix(self,ctx,do='',prfx=''):
         user=str(ctx.author.id)
-        if do=='':
+        
+        if do=='add' and prfx!='':
+            self.add_prefix(user,prfx)
+            await ctx.send(f"> added custom prefix - {prfx}")
+        elif do=='remove' and prfx!='':
+            self.remove_prefix(user,prfx)
+            await ctx.send(f"> removed custom prefix - {prfx}")
+        else:
             e=discord.Embed(title="CUSTOM PREFIX",description=f"add : add a custom prefix\nremove : remove a custom prefix",color=0xFF0055)
             ypfx = ""
             all_pfx=self.get_prefix(str(ctx.author.id))
@@ -95,10 +102,6 @@ class Message_Events(commands.Cog):
                 ypfx+=each+"\n"
             e.add_field(name="your prefixes",value=ypfx)
             await ctx.send(embed=e)
-        elif do=='add' and prfx!='':
-            self.add_prefix(user,prfx)
-        elif do=='remove' and prfx!='':
-            self.remove_prefix(user,prfx)
 
 
 

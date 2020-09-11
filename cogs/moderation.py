@@ -6,6 +6,16 @@ class Moderation(commands.Cog):
         self.bot = bot
 
     @commands.command()
+    async def warn(self,ctx,u:discord.User,*,reason):
+        if ctx.author.id==666578281142812673:
+            await ctx.message.delete()
+            e=discord.Embed(title="",description=f"{u.mention} has been warned | {reason}",color=0xFF0000)
+            await ctx.send(embed=e)
+            await u.send(f"You were warned in {ctx.guild.name}\n reason : {reason}")
+            
+
+
+    @commands.command()
     async def announce(self,ctx,*,msg):
         if ctx.message.author.guild_permissions.administrator:
             m = ctx.guild.members
