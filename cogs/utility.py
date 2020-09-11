@@ -5,11 +5,31 @@ from math import *
 from io import StringIO
 import sys
 from ast import literal_eval
-
+import requests
+import random
 
 class Utility(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
+
+    @commands.command(aliases=["im","img","pic"])
+    async def image(self,ctx,*,msg):
+        query = msg
+
+        r = requests.get("https://api.qwant.com/api/search/images",
+            params={'count': 50,'q': query,'t': 'images','safesearch': 1,'uiv': 4},
+            headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36'
+            })
+
+        response = r.json().get('data').get('result').get('items')
+        urls = [r.get('media') for r in response]
+        url = random.choice(urls)
+        e=discord.Embed(title="Image Search",description=f"\"{query}\" - requested by {ctx.author.mention}",color="0xFF0055")
+        e.set_image(url=url)
+        await ctx.send(embed=e)
+
+
+
 
     @commands.command()
     async def wiki(self,ctx,*,msg):

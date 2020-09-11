@@ -108,7 +108,7 @@ class Rp(commands.Cog):
                         
                     if not path.isdir('files'): os.system('mkdir files')
                     if not path.isdir('files/rp'): os.system('mkdir files/rp')
-                    with open(f'./files/rp/{search_term}.txt','w') as f:f.write(l)
+                    with open(f'./files/rp/{search_term.replace(" ","-")}.txt','w') as f:f.write(l)
 
 
                 else:
@@ -147,6 +147,16 @@ class Rp(commands.Cog):
                 await ctx.send(f'> added {cmd}')
         else :
             print(f"{ctx.author.name}({ctx.author.id}) tried to use addrp command")
+    @commands.command()
+    async def remrp(self,ctx,*,cmd):
+        if ctx.author.id == 666578281142812673:
+            os.system(f'rm files/rp/{cmd}.txt')
+            with open('files/rp_cmd.txt','r+') as f:
+                edited = f.read().replace(cmd,"")
+                f.write(edited)
+            await ctx.send(f'> removed {cmd}')
+        else:
+            print(f"{ctx.author.name}({ctx.author.id}) tried to use remrp command")
 
 def setup(bot):
     bot.add_cog(Rp(bot))

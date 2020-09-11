@@ -11,7 +11,7 @@ class Misc(commands.Cog):
         self.bot = bot
         
     	
-    @commands.command()
+    @commands.command(aliases=["av","avatar"])
     async def pfp(self,ctx, mn:discord.User=None):
         if mn==None:
             mn=ctx.author

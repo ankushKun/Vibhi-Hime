@@ -64,7 +64,7 @@ class Fun(commands.Cog):
     async def ask(self,ctx):
         response =['Yes of Course','Oh Yeah','Yep','Without a doubt',
                    'Nopee','Noooooo','Nuo','Na','-_-',
-                   'idk','I cant tell now','How should I know','meh','that was a shitty question']
+                   'idk','I cant tell now','How should I know','meh','that was a shitty question','']
         await ctx.send(random.choice(response))
         
         

@@ -21,7 +21,7 @@ class Moderation(commands.Cog):
 		
     @commands.command(aliases=['clear'])
     async def cls(self,ctx,l):
-        if ctx.message.author.guild_permissions.administrator:
+        if ctx.message.author.guild_permissions.manage_messages:
             try:
                 await ctx.channel.purge(limit=int(l)+1)
             except:
@@ -42,7 +42,7 @@ class Moderation(commands.Cog):
             
     @commands.command()
     async def ban(self,ctx,u:discord.User=None,reason=None):
-        if ctx.message.author.guild_permissions.administrator:
+        if ctx.message.author.guild_permissions.ban_members:
             if reason==None:
                 reason="For being a jerk!"
             if u==None:
@@ -59,7 +59,7 @@ class Moderation(commands.Cog):
         
     @commands.command()
     async def kick(self,ctx,u:discord.User=None,reason=None):
-        if ctx.message.author.guild_permissions.administrator:
+        if ctx.message.author.guild_permissions.kick_members:
             if reason==None:
                 reason="For being a jerk!"
             if u==None:
@@ -77,7 +77,7 @@ class Moderation(commands.Cog):
         
     @commands.command()
     async def unban(self,ctx,member=None,reason=None):
-        if ctx.message.author.guild_permissions.administrator:
+        if ctx.message.author.guild_permissions.ban_members:
             if reason==None:
                 reason="For being a good kid!"
             if member==None:
@@ -93,7 +93,7 @@ class Moderation(commands.Cog):
                     if (user.name, user.discriminator) == (member_name, member_discriminator):
                         await ctx.guild.unban(user,reason=reason)
                         await ctx.send(f"{user.mention} has been unbanned")
-                        await u.send(f'you have been unbanned from **{ctx.guild}**\nReason : **{reason}**')
+                        await user.send(f'you have been unbanned from **{ctx.guild}**\nReason : **{reason}**')
             except Exception as e:
                 await ctx.send(f"```{e}```")
         else:
