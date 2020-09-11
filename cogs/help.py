@@ -31,7 +31,7 @@ class Help(commands.Cog):
             for c in d:
                 rolepl+="   "+c.replace('.txt','')
             
-            h = discord.Embed(title='Vibhi Chan help',description='need help?',color=0xFFBF00)
+            h = discord.Embed(title='Vibhi Chan help',description='need help?',color=0xFF0055)
             h.add_field(name='__ABOUT__',value="Hi I'm Vibhi, Official mascot of Weebee Con 2020\nPrefix : ``v!``")
             h.add_field(name='__SUPPORT__',value="If you find any bugs or would like to reccomend a feature [join this server](https://discord.gg/rzJGuWP)")
             h.add_field(name='__INVITE__',value="[Invite me to your server (click here)](https://discord.com/api/oauth2/authorize?client_id=746984468199374908&permissions=8&scope=bot)")
@@ -52,7 +52,7 @@ class Help(commands.Cog):
     
     @commands.command()
     async def about(self,ctx):
-        h = discord.Embed(title='About Vibhi Chan',description='I am Vibhi, the official mascot of weebee con - Indias first anime con.\nDeveloped by : ``weeblet~kun#1193``',color=0xFFBF00)
+        h = discord.Embed(title='About Vibhi Chan',description='I am Vibhi, the official mascot of weebee con - Indias first anime con.\nDeveloped by : ``weeblet~kun#1193``',color=0xFF0055)
         h.add_field(name='__DEVELOPER LINKS__',value=links_str)
         await ctx.send(embed=h)
     
