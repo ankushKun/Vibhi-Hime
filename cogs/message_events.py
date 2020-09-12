@@ -64,7 +64,6 @@ class Message_Events(commands.Cog):
         user=str(msg.author.id)
         prefixes = self.get_prefix(user)
         for pfix in prefixes:
-            print(msg.content)
             if msg.content.startswith(pfix):
                 msg.content = msg.content.replace(pfix,'v!').replace('v! ','v!')
                 await self.bot.process_commands(msg)

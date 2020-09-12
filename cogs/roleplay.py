@@ -44,7 +44,6 @@ class Rp(commands.Cog):
                 em = discord.Embed(title='',description=f'{msg.author.mention} {ms[:ms.index(" ")]}s{ms[ms.index(" "):]}',color=0xFF0055)
                 em.set_image(url=gif)
                 await msg.channel.send(embed=em)
-        #await self.bot.process_commands(msg)
 
     @commands.command()
     async def updaterp(self,ctx,amt=5):

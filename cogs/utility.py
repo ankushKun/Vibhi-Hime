@@ -21,8 +21,9 @@ class Utility(commands.Cog):
             page = requests.get(url)
             soup = BeautifulSoup(page.content, 'html.parser')
             images=[]
-            for img in soup.find_all('img',{"class":"n3VNCb"}):
+            for img in soup.find_all('img'):
                 images.append(img.get('src'))
+            print(images)
             del images[0]
             url=random.choice(images)
 
