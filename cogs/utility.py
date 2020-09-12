@@ -17,13 +17,13 @@ class Utility(commands.Cog):
     async def image(self,ctx,*,msg):
         async with ctx.typing():
             query = msg
-            url=f"https://www.google.co.in/search?q={query.replace(' ','+')}&source=lnms&tbm=isch"
+            url=f"https://www.google.co.in/search?q={query.replace(' ','+')}&source=lnms&tbm=isch&safe=active"
             page = requests.get(url)
             soup = BeautifulSoup(page.content, 'html.parser')
             images=[]
             for img in soup.find_all('img'):
                 images.append(img.get('src'))
-            print(images)
+            
             del images[0]
             url=random.choice(images)
 
