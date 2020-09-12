@@ -3,6 +3,9 @@ from discord.ext import commands
 import os
 import random
 from disputils import BotEmbedPaginator
+import pyrebase
+import json
+from decouple import config
 
 links_str="""
 [Youtube](https://youtube.com/AnkushTechCreator)
@@ -17,6 +20,10 @@ links_str="""
 [Vibhi Chan Invite Link](https://discord.com/api/oauth2/authorize?client_id=746984468199374908&permissions=8&scope=bot)
 """
 
+
+firebase = pyrebase.initialize_app(json.loads(config("FIREBASE")))
+db=firebase.database()
+
 class Help(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
@@ -27,9 +34,9 @@ class Help(commands.Cog):
         global help_str
         rolepl=""
         try:
-            d = os.listdir('./files/rp')
+            d = db.child("RP").child("GIF").get().val()
             for c in d:
-                rolepl+="   "+c.replace('.txt','')
+                rolepl+=c+"   "
             
             h = discord.Embed(title='Vibhi Chan help',description='need help?',color=0xFF0055)
             h.add_field(name='__ABOUT__',value="Hi I'm Vibhi, Official mascot of Weebee Con 2020\nPrefix : ``v!``")

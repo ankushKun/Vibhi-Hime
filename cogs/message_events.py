@@ -45,7 +45,6 @@ class Message_Events(commands.Cog):
             guild_id=str(msg.guild.id)
             user_id=str(msg.author.id)
             tag=guild_id+user_id
-
             if self.afk_exists(tag):
                 data=self.get_info(tag)
                 self.remove_afk(tag)
@@ -65,14 +64,16 @@ class Message_Events(commands.Cog):
         user=str(msg.author.id)
         prefixes = self.get_prefix(user)
         for pfix in prefixes:
+            print(msg.content)
             if msg.content.startswith(pfix):
                 msg.content = msg.content.replace(pfix,'v!').replace('v! ','v!')
                 await self.bot.process_commands(msg)
+                
 
     def get_prefix(self,uid):
         pfxs=db.child("PREFIX").child(uid).get().val()
         if pfxs==None:pfxs=[]
-        return pfxs
+        return list(pfxs)
 
     def add_prefix(self,uid,pf):
         pfxs=db.child("PREFIX").child(uid).get().val()

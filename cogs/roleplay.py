@@ -26,11 +26,12 @@ class Rp(commands.Cog):
     async def on_message(self,msg):
         user=str(msg.author.id)
         prefixes = self.get_prefix(user)
+        newmsg=msg.content
         for pfix in prefixes:
             if msg.content.startswith(pfix):
-                msg.content = msg.content.replace(pfix,'v!').replace('v! ','v!')
-                #await self.bot.process_commands(msg)
-        ms= msg.content.lower()
+                newmsg = msg.content.replace(pfix,'v!').replace('v! ','v!')
+                
+        ms= newmsg.lower()
         ms+=' '
         if 'v!' in ms:
             ms=ms[2:]
@@ -43,7 +44,7 @@ class Rp(commands.Cog):
                 em = discord.Embed(title='',description=f'{msg.author.mention} {ms[:ms.index(" ")]}s{ms[ms.index(" "):]}',color=0xFF0055)
                 em.set_image(url=gif)
                 await msg.channel.send(embed=em)
-           
+        #await self.bot.process_commands(msg)
 
     @commands.command()
     async def updaterp(self,ctx,amt=5):
