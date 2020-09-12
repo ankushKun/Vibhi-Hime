@@ -2,22 +2,39 @@ import discord
 from discord.ext import commands
 import os
 import json
+import pyrebase
+from decouple import config
+
+firebase = pyrebase.initialize_app(json.loads(config("FIREBASE")))
+db=firebase.database()
 
 
 class Message_Events(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
-        self.data={}
+        
     
-    def load_afk(self):
-        global data
-        with open('files/afk.json','r') as f:
-            data = json.loads(f.read())
+    def afk_exists(self,uid):
+        try:
+            return uid in db.child("AFK").get().val()
+        except Exception as e:
+            pass
+        
+    
+    def remove_afk(self,uid):
+        if self.afk_exists(uid):
+            db.child("AFK").child(uid).remove()
+            
+        
 
-    def write_afk(self,d={}):
-        global data
-        with open('files/afk.json','w') as f:
-            f.write(json.dumps(d))
+    def set_afk(self,uid,data):
+        db.child("AFK").child(uid).set(data)
+        
+    def get_info(self,uid):
+        if self.afk_exists(uid):
+            d=db.child("AFK").child(uid).get().val()
+            return d
+        else: return [-1,"error"]
 
     
     @commands.Cog.listener()
@@ -28,22 +45,23 @@ class Message_Events(commands.Cog):
             guild_id=str(msg.guild.id)
             user_id=str(msg.author.id)
             tag=guild_id+user_id
-            self.load_afk()
-            if tag in data:
-                no_more_afk=f"welcome back {msg.author.mention}.\n__{data[tag][1]}__.\nYou were pinged __{data[tag][0]}__ times."
-                await msg.channel.send(no_more_afk)
-                del data[tag]
-                self.write_afk(data)
-                return
 
+            if self.afk_exists(tag):
+                data=self.get_info(tag)
+                self.remove_afk(tag)
+                no_more_afk=f"welcome back {msg.author.mention}.\n__{data[1]}__.\nYou were pinged __{data[0]}__ times."
+                await msg.channel.send(no_more_afk)
+                # remove afk here
         for ping in msg.mentions:
             guild_id=str(msg.guild.id)
-            for user in data:
-                if user == guild_id+str(ping.id):
-                    data[user][0]+=1
-                    self.write_afk(data)
-                    msg_afk=f"**{ping.display_name}** is AFK\n\n{data[user][1]}"
-                    await msg.channel.send(msg_afk)
+            user_id=str(ping.id)
+            tag=guild_id+user_id
+            if self.afk_exists(tag):
+                data=self.get_info(tag)
+                data[0]+=1
+                self.set_afk(tag,data)
+                msg_afk=f"**{ping.display_name}** is AFK\n\n{data[1]}"
+                await msg.channel.send(msg_afk)
         user=str(msg.author.id)
         prefixes = self.get_prefix(user)
         for pfix in prefixes:
@@ -51,31 +69,23 @@ class Message_Events(commands.Cog):
                 msg.content = msg.content.replace(pfix,'v!').replace('v! ','v!')
                 await self.bot.process_commands(msg)
 
-    def get_prefix(self,id):
-        try:
-            with open('files/prefixes.json','r')as f:
-                l = json.loads(f.read())
-                if id in l:
-                    return l[id]
-                else: return []
-        except Exception as e:
-            print(e)
+    def get_prefix(self,uid):
+        pfxs=db.child("PREFIX").child(uid).get().val()
+        if pfxs==None:pfxs=[]
+        return pfxs
 
-    def add_prefix(self,id,pf):
-        with open('files/prefixes.json','r')as f:
-            l = json.loads(f.read())
-        if not id in l:
-            l[id]=[]
-        l[id].append(pf)
-        with open('files/prefixes.json','w')as f:
-            f.write(json.dumps(l))
+    def add_prefix(self,uid,pf):
+        pfxs=db.child("PREFIX").child(uid).get().val()
+        if pfxs==None:pfxs=[]
+        pfxs.append(pf)
+        db.child("PREFIX").child(uid).set(pfxs)
+        
 
-    def remove_prefix(self,id,pf):
-        with open('files/prefixes.json','r')as f:
-            l = json.loads(f.read())
-        del l[id][l[id].index(pf)]
-        with open('files/prefixes.json','w')as f:
-            f.write(json.dumps(l))
+    def remove_prefix(self,uid,pf):
+        pfxs=db.child("PREFIX").child(uid).get().val()
+        if pfxs==None:pfxs=[]
+        else:del pfxs[pfxs.index(pf)]
+        db.child("PREFIX").child(uid).set(pfxs)
 
 
     
@@ -104,15 +114,12 @@ class Message_Events(commands.Cog):
 
     
     @commands.command()
-    async def afk(self,ctx,*,status=''):
-        global data
-        if status=='':status='No status set'
-        self.load_afk()
+    async def afk(self,ctx,*,status=' '):
         guild_id=str(ctx.guild.id)
         user=str(ctx.author.id)
         tag=guild_id+user
-        data[tag]=[0,status]
-        self.write_afk(data)
+        data=[0,status]
+        self.set_afk(tag,data)
         #e=discord.Embed(title="AFK SET",description=f"{ctx.author.mention} is AFK\n{status}",color=0xFF0055)
         #await ctx.send(embed=e)
         msg=f"{ctx.author.mention} is AFK\n{status}"

@@ -8,22 +8,19 @@ from os import chdir, getcwd, mkdir
 import os.path
 from os import path
 from decouple import config
+import pyrebase
 
-
+firebase = pyrebase.initialize_app(json.loads(config("FIREBASE")))
+db=firebase.database()
 
 class Rp(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
     
-    def get_prefix(self,id):
-        try:
-            with open('files/prefixes.json','r')as f:
-                l= json.loads(f.read())
-                if id in l:
-                    return l[id]
-                else: return []
-        except:
-            pass
+    def get_prefix(self,uid):
+        pfxs=db.child("PREFIX").child(uid).get().val()
+        if pfxs==None:pfxs=[]
+        return pfxs
             
     @commands.Cog.listener()
     async def on_message(self,msg):
@@ -37,12 +34,12 @@ class Rp(commands.Cog):
         ms+=' '
         if 'v!' in ms:
             ms=ms[2:]
-            d = os.listdir('./files/rp/')
-            filename=ms[:ms.index(' ')]+".txt"
-            if filename in d:
-                with open(f'./files/rp/{filename}','r') as f:
-                    urls=f.read().split('\n')
-                gif=choice(urls[:-1])
+            
+            rpname=ms[:ms.index(' ')]
+            rps=db.child("RP").child("GIF").get().val()
+            
+            if rpname in rps:
+                gif = choice(rps[rpname][:-1])
                 em = discord.Embed(title='',description=f'{msg.author.mention} {ms[:ms.index(" ")]}s{ms[ms.index(" "):]}',color=0xFF0055)
                 em.set_image(url=gif)
                 await msg.channel.send(embed=em)
@@ -51,14 +48,10 @@ class Rp(commands.Cog):
     @commands.command()
     async def updaterp(self,ctx,amt=5):
         if ctx.author.id == 666578281142812673:
-            
             API_KEY = config("TENOR_KEY")
-
             r = requests.get(f"https://api.tenor.com/v1/anonid?&key={API_KEY}")
-            
-            with open('files/rp_cmd.txt','r') as f:
-                rp=f.read().split('\n')
-            await ctx.send('updating all ...')
+            rp = db.child("RP").child("CMD").get().val()
+            await ctx.send('> updating all RP gifs ...')
             
             
             if r.status_code == 200:
@@ -96,10 +89,9 @@ class Rp(commands.Cog):
                     for i in range(len(tenorjson["results"])):
                         url = tenorjson["results"][i]["media"][0][filetype]["url"]
                         l+=url+"\n"
-                        
-                    if not path.isdir('files'): os.system('mkdir files')
-                    if not path.isdir('files/rp'): os.system('mkdir files/rp')
-                    with open(f'./files/rp/{search_term.replace(" ","-")}.txt','w') as f:f.write(l)
+                    l=l.split("\n")
+                    db.child("RP").child("GIF").child(search_term.replace(" ","-")).set(l)
+                    
 
 
                 else:
@@ -118,34 +110,36 @@ class Rp(commands.Cog):
             await ctx.send('OwO new gifs')         
         else :
             print(f"{ctx.author.name}({ctx.author.id}) tried to use updategif command")
+            
+            
+            
     @commands.command(aliases=['rp'])
     async def roleplay(self,ctx):
         rolepl=""
-        try:
-            d = os.listdir('./files/rp')
-            for c in d:
-                rolepl+="\n"+c.replace('.txt','')
-        except:
-            pass
+        for each in db.child("RP").child("GIF").get().val():
+            rolepl+="\n"+each
         e=discord.Embed(title="Roleplay commands",description=f"{rolepl}",color=0xFF0055)
         await ctx.send(embed=e)
     
     @commands.command()
     async def addrp(self,ctx,*,cmd):
         if ctx.author.id == 666578281142812673:
-            with open('files/rp_cmd.txt','a') as f:
-                f.write("\n"+cmd)
-                await ctx.send(f'> added {cmd}')
+            cmd=cmd.replace(" ","-")
+            rp_cmd=db.child("RP").child("CMD").get().val()
+            rp_cmd.append(cmd)
+            db.child("RP").child("CMD").set(rp_cmd)
+            await ctx.send(f"> {cmd} was added")
         else :
             print(f"{ctx.author.name}({ctx.author.id}) tried to use addrp command")
     @commands.command()
     async def remrp(self,ctx,*,cmd):
         if ctx.author.id == 666578281142812673:
-            os.system(f'rm files/rp/{cmd}.txt')
-            with open('files/rp_cmd.txt','r+') as f:
-                edited = f.read().replace(cmd,"")
-                f.write(edited)
-            await ctx.send(f'> removed {cmd}')
+            cmd=cmd.replace(" ","-")
+            rp_cmd=db.child("RP").child("CMD").get().val()
+            del rp_cmd[rp_cmd.index(cmd)]
+            db.child("RP").child("CMD").set(rp_cmd)
+            db.child("RP").child("GIF").child(cmd).remove()
+            await ctx.send(f'> {cmd} was removed')
         else:
             print(f"{ctx.author.name}({ctx.author.id}) tried to use remrp command")
 

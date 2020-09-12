@@ -1,0 +1,10 @@
+discord.py
+requests
+pyrebase
+disputils
+python-decouple
+wikipedia
+pynacl
+youtube_dl
+praw
+bs4

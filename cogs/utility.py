@@ -37,16 +37,16 @@ class Utility(commands.Cog):
     @commands.command()
     async def wiki(self,ctx,*,msg):
         try:
-            e=discord.Embed(title=msg,description=wikipedia.summary(msg,sentences=10))
+            e=discord.Embed(title=msg,description=wikipedia.summary(msg,sentences=10),color=0xFF0055)
             await ctx.send(embed=e)
         except wikipedia.exceptions.DisambiguationError as e:
             s=''
             for i in e.options:
                 s+=i+'\n'
-            em=discord.Embed(title='Error',description='Try Something from these\n'+s)
+            em=discord.Embed(title='Error',description='Try Something from these\n'+s,color=0xFF0055)
             await ctx.send(embed=em)
         except Exception as e:
-            em=discord.Embed(title='Error',description='Could not find what you are looking for')
+            em=discord.Embed(title='Error',description='Could not find what you are looking for',color=0xFF0055)
             em.add_field(name=str(e))
             await ctx.send(embed=em)
         

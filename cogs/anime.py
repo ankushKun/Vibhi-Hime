@@ -28,7 +28,7 @@ class Anime(commands.Cog):
             u_titles.append(n.title)
             
         n=random.randint(0,len(urls))
-        e=discord.Embed(title=u_titles[n])
+        e=discord.Embed(title=u_titles[n],color=0xFF0055)
         e.set_image(url=urls[n])
         await ctx.send(embed=e)
         
@@ -43,7 +43,7 @@ class Anime(commands.Cog):
             u_titles.append(m.title)
             
         n=random.randint(0,len(urls))
-        e=discord.Embed(title=u_titles[n])
+        e=discord.Embed(title=u_titles[n],color=0xFF0055)
         e.set_image(url=urls[n])
         await ctx.send(embed=e)
     
