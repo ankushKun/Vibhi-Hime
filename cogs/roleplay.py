@@ -38,10 +38,15 @@ class Rp(commands.Cog):
             
             rpname=ms[:ms.index(' ')]
             rps=db.child("RP").child("GIF").get().val()
-            
+            action='s'
+            rp=rpname
+            if rpname.endswith('s') or rpname.endswith('ch'):action='es'
+            if rpname.endswith('y'):
+                action='ies'
+                rp=rpname[:-1]
             if rpname in rps:
                 gif = choice(rps[rpname][:-1])
-                em = discord.Embed(title='',description=f'{msg.author.mention} {ms[:ms.index(" ")]}s{ms[ms.index(" "):]}',color=0xFF0055)
+                em = discord.Embed(title='',description=f'{msg.author.mention} {rp}{action}{ms[ms.index(" "):]}',color=0xFF0055)
                 em.set_image(url=gif)
                 await msg.channel.send(embed=em)
 
