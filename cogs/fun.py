@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import random
 import praw
+from prawcore import NotFound
 from decouple import config
 import requests
 import json
@@ -59,12 +60,39 @@ class Fun(commands.Cog):
         e=discord.Embed(title=u_titles[n],color=0xFF0055)
         e.set_image(url=urls[n])
         await ctx.send(embed=e)
+        
+    @commands.command()
+    async def reddit(self,ctx,*,sr):
+        def sub_exists(sub):
+            exists = True
+            try:
+                reddit.subreddits.search_by_name(sub, exact=True)
+            except NotFound:
+                exists = False
+            return exists
+            
+        if sub_exists(sr):
+            sr = reddit.subreddit(sr)
+            posts = sr.new(limit=100)
+            urls,u_titles = [],[]
+            
+            for m in posts:
+                urls.append(m.url)
+                u_titles.append(m.title)
+                
+            n=random.randint(0,len(urls))
+            e=discord.Embed(title=u_titles[n],color=0xFF0055)
+            e.set_image(url=urls[n])
+            await ctx.send(embed=e)
+        else:
+            await ctx.send("That subreddit doesnot exist :(")
 
     @commands.command()
     async def ask(self,ctx):
         response =['Yes of Course','Oh Yeah','Yep','Without a doubt',
                    'Nopee','Noooooo','Nuo','Na','-_-',
-                   'idk','I cant tell now','How should I know','meh','that was a shitty question','']
+                   'idk','I cant tell now','How should I know','meh',
+                   'that was a shitty question','what the . . .']
         await ctx.send(random.choice(response))
         
         

@@ -26,6 +26,8 @@ developed by : weeblet~kun#1193
     - **animegif**
 - **GAMES**
     - **rps**   play rock paper scissors
+    - **toss**  coin toss
+    - **roll**  roll a dice
 - **MUSIC**
     - **play**    plays a song
     - **pause**   pauses a song
