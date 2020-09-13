@@ -6,7 +6,7 @@ from decouple import config
 
 print("---> BOT is waking up\n")
 
-bot = commands.Bot(command_prefix=["v!","V!"],case_insensitive=True)
+bot = commands.Bot(command_prefix=["w!","V!"],case_insensitive=True)
 bot.remove_command('help')
 
 def load_cogs():
@@ -23,4 +23,4 @@ async def on_ready():
     print('\n---> BOT is awake\n')
     
 
-bot.run(config('BOT_TOKEN'))
+bot.run(config('NzU0NjM3MzQ2MTc0OTI2OTY4.X13oyw.NDc1ldMyPyt2S3TQGkV-SvWCnHk'))
