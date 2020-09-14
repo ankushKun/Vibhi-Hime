@@ -12,6 +12,8 @@ reddit = praw.Reddit(client_id=config('REDDIT_CLIENT_ID'),client_secret=config('
 API_KEY = config("TENOR_KEY")
 r = requests.get(f"https://api.tenor.com/v1/anonid?&key={API_KEY}")
 
+deletable_messages=[]
+
 class Fun(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
@@ -41,7 +43,9 @@ class Fun(commands.Cog):
             if urls==[]:
                 await ctx.send(f"can't find any gifs related to {search_term}")
                 return
-            await ctx.send(random.choice(urls))
+            gif_msg = await ctx.send(random.choice(urls))
+            await gif_msg.add_reaction('🗑️')
+            deletable_messages.append(gif_msg.id)
         else:
             tenorjson = None
         
@@ -83,10 +87,19 @@ class Fun(commands.Cog):
             n=random.randint(0,len(urls))
             e=discord.Embed(title=u_titles[n],color=0xFF0055)
             e.set_image(url=urls[n])
-            await ctx.send(embed=e)
+            post = await ctx.send(embed=e)
+            await post.add_reaction('🗑️')
+            deletable_messages.append(post.id)
         else:
-            await ctx.send("That subreddit doesnot exist :(")
-
+            post = await ctx.send("That subreddit doesnot exist :(")
+            
+            
+    @commands.Cog.listener()
+    async def on_raw_reaction_add(self,reaction):
+        if reaction.message_id in deletable_messages and reaction.emoji.name == '🗑️' and not reaction.member.bot:
+            await self.bot.http.delete_message(reaction.channel_id, reaction.message_id)
+            deletable_messages.remove(reaction.message_id)
+            
     @commands.command()
     async def ask(self,ctx):
         response =['Yes of Course','Oh Yeah','Yep','Without a doubt',

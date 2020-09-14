@@ -37,7 +37,7 @@ class Rp(commands.Cog):
             ms=ms[2:]
             
             rpname=ms[:ms.index(' ')]
-            rps=db.child("RP").child("GIF").get().val()
+            rps=db.child("RP").child("CMD").get().val()
             action='s'
             rp=rpname
             if rpname.endswith('s') or rpname.endswith('ch'):action='es'
@@ -45,83 +45,68 @@ class Rp(commands.Cog):
                 action='ies'
                 rp=rpname[:-1]
             if rpname in rps:
-                gif = choice(rps[rpname][:-1])
+                gif = choice(await self.get_gif(rpname))
                 em = discord.Embed(title='',description=f'{msg.author.mention} {rp}{action}{ms[ms.index(" "):]}',color=0xFF0055)
                 em.set_image(url=gif)
                 await msg.channel.send(embed=em)
 
-    @commands.command()
-    async def updaterp(self,ctx,amt=5):
-        if ctx.author.id == 666578281142812673:
-            API_KEY = config("TENOR_KEY")
-            r = requests.get(f"https://api.tenor.com/v1/anonid?&key={API_KEY}")
-            rp = db.child("RP").child("CMD").get().val()
-            await ctx.send('> updating all RP gifs ...')
+
+
+    async def get_gif(self,cmd):
+        API_KEY = config("TENOR_KEY")
+        r = requests.get(f"https://api.tenor.com/v1/anonid?&key={API_KEY}")
+        rp = [cmd]
+        #await ctx.send('> updating all RP gifs ...')
             
             
+        if r.status_code == 200:
+            with open("anon_id.txt", "a+") as f:
+                if f.read() == "":
+                    r = requests.get(f"https://api.tenor.com/v1/anonid?&key={API_KEY}")
+                    anon_id = json.loads(r.content)["anon_id"]
+                    f.write(anon_id)
+                else:
+                    anon_id = f.read()
+                    mkdir("media")
+        else:
+            #await ctx.send("Failed Connection, Please try again")
+            return []
+
+        #chdir(getcwd() + "\\media")
+        for rp_c in rp:
+            limit = 5
+            search_term = rp_c
+            filetype = "gif"
+                    
+                
+            search="anime "+search_term
+            r = requests.get(f"https://api.tenor.com/v1/search?q={search}&key={API_KEY}&limit={limit}&anon_id={anon_id}")
+
             if r.status_code == 200:
-                with open("anon_id.txt", "a+") as f:
-                    if f.read() == "":
-                        r = requests.get(f"https://api.tenor.com/v1/anonid?&key={API_KEY}")
-                        anon_id = json.loads(r.content)["anon_id"]
-                        f.write(anon_id)
-                    else:
-                        anon_id = f.read()
-                        mkdir("media")
+                tenorjson = json.loads(r.content)
+                l=[]
+                for i in range(len(tenorjson["results"])):
+                    url = tenorjson["results"][i]["media"][0][filetype]["url"]
+                    l.append(url)
+                return l
+                #db.child("RP").child("GIF").child(search_term.replace(" ","-")).set(l)
+                    
+
+
             else:
-                await ctx.send("Failed Connection, Please try again")
-                return
-
-            #chdir(getcwd() + "\\media")
-            for rp_c in rp:
-                limit = amt
-                search_term = rp_c
-                filetype = "gif"
-
-                if filetype ==  "h":
-                    print("Currently supported filetypes:")
-                    print("-gif")
-                    print("-mp4")
-                    print("-webm")
-                    
-                    filetype = input("Filetype: ")
-                search="anime "+search_term
-                r = requests.get(f"https://api.tenor.com/v1/search?q={search}&key={API_KEY}&limit={limit}&anon_id={anon_id}")
-
-                if r.status_code == 200:
-                    tenorjson = json.loads(r.content)
-                    l=""
-                    for i in range(len(tenorjson["results"])):
-                        url = tenorjson["results"][i]["media"][0][filetype]["url"]
-                        l+=url+"\n"
-                    l=l.split("\n")
-                    db.child("RP").child("GIF").child(search_term.replace(" ","-")).set(l)
-                    
-
-
-                else:
-                    tenorjson = None
-                    await ctx.send("Failed connection Please Try Again")
-                    continue
+                tenorjson = None
+                await ctx.send("Failed connection Please Try Again")
+                return []
+            continue
                 
-                #await ctx.send(f"``{search_term} updated``")
-                continue
-                
-                if input("Would you like to download any more files[Y or N]: ").upper() == "Y":
-                    continue
-                else:
-                    #print("Thank you for using TenorDownloader.py")
-                    break    
-            await ctx.send('OwO new gifs')         
-        else :
-            print(f"{ctx.author.name}({ctx.author.id}) tried to use updategif command")
+        #await ctx.send('OwO new gifs')         
             
             
             
     @commands.command(aliases=['rp'])
     async def roleplay(self,ctx):
         rolepl=""
-        for each in db.child("RP").child("GIF").get().val():
+        for each in db.child("RP").child("CMD").get().val():
             rolepl+="\n"+each
         e=discord.Embed(title="Roleplay commands",description=f"{rolepl}",color=0xFF0055)
         await ctx.send(embed=e)

@@ -16,11 +16,12 @@ developed by : weeblet~kun#1193
 - **ROLEPLAY**
     - **bite, dance, kill, run, laugh, cry, punch, nosebleed, clap** *and many more*
 - **FUN**
-    - **pun**   sends puns
-    - **joke**  sends jokes
-    - **meme**  sends memes
-    - **gif**   gif search
-    - **ask**   ask yes or no questions
+    - **pun**    sends puns
+    - **joke**   sends jokes
+    - **meme**   sends memes
+    - **gif**    gif search
+    - **ask**    ask yes or no questions
+    - **reddit** shows a random post from  a specified subreddit
 - **ANIME MANGA**
     - **anime**
     - **animegif**
