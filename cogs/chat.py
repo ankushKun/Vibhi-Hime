@@ -19,7 +19,7 @@ class Chat(commands.Cog):
     async def on_message(self,msg):
         
         if "vibhi" in msg.channel.name.lower() and not msg.author.bot:
-            async with ctx.typing():
+            async with msg.channel.typing():
                 if choice([True,False,True,True]):
                     x=str(kernel.respond(str(msg.content)))
                     if x.startswith("Oh, you are a poet. "):x="huh?, "+x[19:]
