@@ -3,6 +3,9 @@ from discord.ext import commands
 import os
 import aiml
 import io
+from time import sleep as delay
+from random import randint
+from random import choice
 
 kernel = aiml.Kernel()
 kernel.bootstrap(brainFile = "./chat-with-vibhi/bot_brain.brn")
@@ -14,11 +17,18 @@ class Chat(commands.Cog):
     
     @commands.Cog.listener()
     async def on_message(self,msg):
+        
         if "vibhi" in msg.channel.name.lower() and not msg.author.bot:
-            x=kernel.respond(str(msg.content))
-            if x.startswith("Oh, you are a poet. "):x="huh?, "+x[19:]
-            if "ALICE" in x:x.replace("ALICE","Vibhi")
-            await msg.channel.send(x)
+            async with ctx.typing():
+                if choice([True,False,True,True]):
+                    x=str(kernel.respond(str(msg.content)))
+                    if x.startswith("Oh, you are a poet. "):x="huh?, "+x[19:]
+                    if "ALICE" in x: x.replace("ALICE","Vibhi")
+                    delay(randint(1,3))
+                else:
+                    responses=["Can we talk later?.","I cant stay long brb soon.","I busy rn."]
+                    x=choice(responses)
+                await msg.channel.send(x)
             
     @commands.command(aliases=["setupchat","setupvibhi","vibhisetup","chat"])
     async def setuptalk(self,ctx):
