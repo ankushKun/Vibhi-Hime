@@ -100,7 +100,7 @@ class Fun(commands.Cog):
             await self.bot.http.delete_message(reaction.channel_id, reaction.message_id)
             deletable_messages.remove(reaction.message_id)
             
-    @commands.command()
+    #@commands.command()
     async def ask(self,ctx):
         response =['Yes of Course','Oh Yeah','Yep','Without a doubt',
                    'Nopee','Noooooo','Nuo','Na','-_-',
