@@ -20,15 +20,11 @@ class Chat(commands.Cog):
         
         if "vibhi" in msg.channel.name.lower() and not msg.author.bot:
             async with msg.channel.typing():
-                if choice([True,False,True,True]):
-                    x=str(kernel.respond(str(msg.content)))
-                    if x.startswith("Oh, you are a poet. "):x="huh?, "+x[19:]
-                    if "ALICE" in x: x.replace("ALICE","Vibhi")
-                    delay(randint(1,3))
-                else:
-                    responses=["Can we talk later?.","I cant stay long brb soon.","I busy rn."]
-                    x=choice(responses)
-                await msg.channel.send(x)
+                x=str(kernel.respond(str(msg.content)))
+                if x.startswith("Oh, you are a poet. "):x="huh?, "+x[19:]
+                if "ALICE" in x: x.replace("ALICE","Vibhi")
+                delay(randint(1,2))
+            await msg.channel.send(x)
             
     @commands.command(aliases=["setupchat","setupvibhi","vibhisetup","chat"])
     async def setuptalk(self,ctx):
