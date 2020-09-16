@@ -65,7 +65,7 @@ class Fun(commands.Cog):
         e.set_image(url=urls[n])
         await ctx.send(embed=e)
         
-    @commands.command()
+    @commands.command(aliases=["r/ "])
     async def reddit(self,ctx,*,sr):
         def sub_exists(sub):
             exists = True
@@ -130,8 +130,10 @@ class Fun(commands.Cog):
             
             
     @commands.command()
-    async def boom(self,ctx,u:discord.User):
-        await ctx.send(f'{u.mention} has been nuked\nhttps://i.pinimg.com/originals/47/12/89/471289cde2490c80f60d5e85bcdfb6da.gif')
+    async def boom(self,ctx,*,msg=''):
+        e=discord.Embed(title="",description=f'{ctx.author.mention} NUKES {msg}',color=0xFF0055)
+        e.set_image(url="https://i.pinimg.com/originals/47/12/89/471289cde2490c80f60d5e85bcdfb6da.gif")
+        await ctx.send(embed=e)
         
 
 def setup(bot):
