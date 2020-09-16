@@ -131,7 +131,7 @@ class Fun(commands.Cog):
             
     @commands.command()
     async def boom(self,ctx,u:discord.User):
-        await ctx.send(f'{u.mention} has been nuked\nhttps://www.google.com/url?sa=i&url=https%3A%2F%2Fgiphy.com%2Fexplore%2Fnuke&psig=AOvVaw3KEZWDUdRJbYpc1U3Nn_6z&ust=1600341180029000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCJjJuezF7esCFQAAAAAdAAAAABAD')
+        await ctx.send(f'{u.mention} has been nuked\nhttps://i.pinimg.com/originals/47/12/89/471289cde2490c80f60d5e85bcdfb6da.gif')
         
 
 def setup(bot):
