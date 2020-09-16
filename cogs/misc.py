@@ -10,7 +10,7 @@ class Misc(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
         
-    	
+        
     @commands.command(aliases=["av","avatar"])
     async def pfp(self,ctx, mn:discord.User=None):
         if mn==None:
@@ -47,7 +47,7 @@ class Misc(commands.Cog):
         
     @commands.command()
     async def servers(self,ctx):
-        server_per_page=5
+        server_per_page=10
         svr = self.bot.guilds
         embeds=[]
         for i in range(0,len(svr),server_per_page):
@@ -63,6 +63,9 @@ class Misc(commands.Cog):
                 
         paginator = BotEmbedPaginator(ctx, embeds)
         await paginator.run()
+        
+    
+        
         
     
         

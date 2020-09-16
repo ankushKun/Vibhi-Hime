@@ -28,7 +28,7 @@ class Moderation(commands.Cog):
                     await ctx.send("could not to send to {}".format(u.mention))
         else :
             await ctx.send(f"{u.mention} you dont have perms, lol")
-		
+        
     @commands.command(aliases=['clear'])
     async def cls(self,ctx,l):
         if ctx.message.author.guild_permissions.manage_messages:
@@ -68,7 +68,7 @@ class Moderation(commands.Cog):
             await ctx.send(f"{ctx.message.author.mention} you dont have the perms, lol")
         
     @commands.command()
-    async def kick(self,ctx,u:discord.User=None,reason=None):
+    async def nuke(self,ctx,u:discord.User=None,reason=None):
         if ctx.message.author.guild_permissions.kick_members:
             if reason==None:
                 reason="For being a jerk!"

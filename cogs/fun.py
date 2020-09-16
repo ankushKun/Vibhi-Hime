@@ -127,6 +127,12 @@ class Fun(commands.Cog):
             await ctx.send(embed=e)
         else:
             await ctx.send(f'```Error : {jk.status_code}```')
+            
+            
+    @commands.command()
+    async def boom(self,ctx,u:discord.User):
+        await ctx.send(f'{u.mention} has been nuked\nhttps://www.google.com/url?sa=i&url=https%3A%2F%2Fgiphy.com%2Fexplore%2Fnuke&psig=AOvVaw3KEZWDUdRJbYpc1U3Nn_6z&ust=1600341180029000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCJjJuezF7esCFQAAAAAdAAAAABAD')
+        
 
 def setup(bot):
     bot.add_cog(Fun(bot))
