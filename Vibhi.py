@@ -2,6 +2,8 @@ import discord
 from discord.ext import commands
 import os
 from decouple import config
+from discord.ext.tasks import loop
+from asyncio import sleep
 
 
 print("---> BOT is waking up\n")
@@ -14,11 +16,22 @@ def load_cogs():
         if file.endswith('.py') and not file.startswith('_'):
             bot.load_extension(f'cogs.{file[:-3]}')
 
+@loop(seconds=240)
+async def presence_change():
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="Anime"))
+    await sleep(60)
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name="Pokemon"))
+    await sleep(60)
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="Anime Openings"))
+    await sleep(60)
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.streaming, name="Anime"))
+    await sleep(60)
+    
 @bot.event
 async def on_ready():
     print(f'---> Logged in as : {bot.user.name} , ID : {bot.user.id}')
     print(f'---> Total Servers : {len(bot.guilds)}\n')
-    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="Anime"))
+    presence_change.start()
     load_cogs()
     print('\n---> BOT is awake\n')
     

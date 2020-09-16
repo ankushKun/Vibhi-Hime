@@ -50,7 +50,6 @@ class Rp(commands.Cog):
             elif rpname.endswith('y'):
                 action='ies'
                 rp=rpname[:-1]
-            elif 
             
             if rpname in rps:
                 gif = choice(await self.get_gif(rpname))
