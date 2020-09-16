@@ -27,22 +27,22 @@ class Help(commands.Cog):
         global help_str
         rolepl=""
         try:
-            d = db.child("RP").child("GIF").get().val()
-            for c in d:
-                rolepl+=c+" , "
+            rolepl=""
+            for each in db.child("RP").child("CMD").get().val():
+                rolepl+=", "+each
             
             h = discord.Embed(title='Vibhi Chan help',description='need help?',color=0xFF0055)
             h.add_field(name='__ABOUT__',value="Hi I'm Vibhi Chan\nPrefix : ``v!``\nFor custom prefix do `v!prefix`\nDeveloped by : ``weeblet~kun#1193``")
             h.add_field(name='__SUPPORT__',value="If you find any bugs or would like to reccomend a feature [join this server](https://discord.gg/7cnnXB)")
             h.add_field(name='__INVITE__',value="[Invite me to your server (click here)](https://discord.com/api/oauth2/authorize?client_id=746984468199374908&permissions=8&scope=bot)")
-            h.add_field(name='__ROLEPLAY__',value=rolepl[:-3])
-            h.add_field(name='__FUN__',value='gif , meme , ask , pun , joke , reddit')
-            h.add_field(name='__ANIME MANGA__',value='anime , animegif')
-            h.add_field(name='__GAMES__',value='rps , toss , roll')
-            h.add_field(name='__UTILITY__',value='wiki , img')
-            h.add_field(name='__MUSIC__',value='play , pause , resume , stop , skip , queue , join , shuffle , disconnect , remove')
-            h.add_field(name='__MISC__',value='afk , pfp , say , invite , stats , servers , about , prefix')
-            h.add_field(name='__MODERATION__',value='announce , dm , clear , ban , unban , nuke(kick user)')
+            h.add_field(name='__ROLEPLAY__',value=rolepl[:-2])
+            h.add_field(name='__FUN__',value='gif, meme, ask, pun, joke, reddit, boom')
+            h.add_field(name='__ANIME MANGA__',value='anime, animegif')
+            h.add_field(name='__GAMES__',value='rps, toss, roll')
+            h.add_field(name='__UTILITY__',value='wiki, img')
+            h.add_field(name='__MUSIC__',value='play, pause, resume, stop, skip, queue, join, shuffle, disconnect, remove')
+            h.add_field(name='__MISC__',value='pfp, invite, stats, prefix')
+            h.add_field(name='__MODERATION__',value='announce, dm, clear, ban, unban, kickout')
             h.add_field(name='__DEVELOPER LINKS__',value=links_str)
             #await ctx.author.send(embed=h)
             await ctx.send(embed=h)

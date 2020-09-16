@@ -68,7 +68,7 @@ class Moderation(commands.Cog):
             await ctx.send(f"{ctx.message.author.mention} you dont have the perms, lol")
         
     @commands.command()
-    async def nuke(self,ctx,u:discord.User=None,reason=None):
+    async def kickout(self,ctx,u:discord.User=None,reason=None):
         if ctx.message.author.guild_permissions.kick_members:
             if reason==None:
                 reason="For being a jerk!"

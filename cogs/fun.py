@@ -130,7 +130,7 @@ class Fun(commands.Cog):
             
             
     @commands.command()
-    async def boom(self,ctx,*,msg=''):
+    async def nuke(self,ctx,*,msg=''):
         e=discord.Embed(title="",description=f'{ctx.author.mention} NUKES {msg}',color=0xFF0055)
         e.set_image(url="https://i.pinimg.com/originals/47/12/89/471289cde2490c80f60d5e85bcdfb6da.gif")
         await ctx.send(embed=e)

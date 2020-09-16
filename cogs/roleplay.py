@@ -40,10 +40,18 @@ class Rp(commands.Cog):
             rps=db.child("RP").child("CMD").get().val()
             action='s'
             rp=rpname
-            if rpname.endswith('s') or rpname.endswith('ch'):action='es'
-            if rpname.endswith('y'):
+            if rpname=='sad': rp,action='is sad',' '
+            elif rpname=='sleepy': rp,action='is sleepy',' '
+            elif rpname=='money': rp,action='dreams about money',' '
+            elif rpname=='scared': rp,action='is scared',' '
+            elif rpname=='happy': rp,action='is happy',' '
+            elif rpname=='delighted': rp,action='is delighted',' '
+            elif rpname.endswith('s') or rpname.endswith('h'):action='es'
+            elif rpname.endswith('y'):
                 action='ies'
                 rp=rpname[:-1]
+            elif 
+            
             if rpname in rps:
                 gif = choice(await self.get_gif(rpname))
                 em = discord.Embed(title='',description=f'{msg.author.mention} {rp}{action}{ms[ms.index(" "):]}',color=0xFF0055)
