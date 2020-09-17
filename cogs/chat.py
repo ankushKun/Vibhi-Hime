@@ -21,10 +21,10 @@ class Chat(commands.Cog):
         if "vibhi" in msg.channel.name.lower() and not msg.author.bot:
             async with msg.channel.typing():
                 x=str(kernel.respond(str(msg.content)))
-                x.replace("@everyone","@ everyone")
-                x.replace("@here","@ here")
+                x=x.replace("@everyone","@ everyone")
+                x=x.replace("@here","@ here")
                 if x.startswith("Oh, you are a poet. "):x="huh?, "+x[19:]
-                x.replace("ALICE","Vibhi")
+                x=x.replace("ALICE","Vibhi")
                 delay(randint(1,2))
             await msg.channel.send(x)
             
