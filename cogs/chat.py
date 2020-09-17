@@ -18,17 +18,15 @@ class Chat(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self,msg):
         if "vibhi" in msg.channel.name.lower() and not msg.author.bot:
-            for ping in msg.mentions:
-                if self.bot.user.id == ping.id: 
-                    async with msg.channel.typing():
-                        x=str(kernel.respond(str(msg.content)))
-                        x=x.replace("@everyone","@ everyone")
-                        x=x.replace("@here","@ here")
-                        if x.startswith("Oh, you are a poet. "):x="huh?, "+x[19:]
-                        x=x.replace("ALICE","Vibhi")
-                        delay(randint(1,2))
-                    await msg.channel.send(x)
-                    return
+            async with msg.channel.typing():
+                x=str(kernel.respond(str(msg.content)))
+                x=x.replace("@everyone","@ everyone")
+                x=x.replace("@here","@ here")
+                if x.startswith("Oh, you are a poet. "):x="huh?, "+x[19:]
+                x=x.replace("ALICE","Vibhi")
+                delay(randint(1,2))
+            await msg.channel.send(x)
+    
 
             
     @commands.command(aliases=["setupchat","setupvibhi","vibhisetup","chat"])
