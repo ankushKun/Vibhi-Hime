@@ -67,6 +67,7 @@ class Fun(commands.Cog):
         
     @commands.command(aliases=["r/ "])
     async def reddit(self,ctx,*,sr):
+        
         def sub_exists(sub):
             exists = True
             try:
@@ -74,24 +75,26 @@ class Fun(commands.Cog):
             except NotFound:
                 exists = False
             return exists
-            
-        if sub_exists(sr):
-            sr = reddit.subreddit(sr)
-            posts = sr.new(limit=100)
-            urls,u_titles = [],[]
-            
-            for m in posts:
-                urls.append(m.url)
-                u_titles.append(m.title)
+        with await ctx.typing():
+            if sub_exists(sr):
+                sr = reddit.subreddit(sr)
+                posts = sr.new(limit=100)
+                urls,u_titles = [],[]
                 
-            n=random.randint(0,len(urls))
-            e=discord.Embed(title=u_titles[n],color=0xFF0055)
-            e.set_image(url=urls[n])
-            post = await ctx.send(embed=e)
-            await post.add_reaction('🗑️')
-            deletable_messages.append(post.id)
-        else:
-            post = await ctx.send("That subreddit doesnot exist :(")
+                for m in posts:
+                    urls.append(m.url)
+                    u_titles.append(m.title)
+                    
+                n=random.randint(0,len(urls))
+                e=discord.Embed(title=u_titles[n],color=0xFF0055)
+                e.set_image(url=urls[n])
+                post = await ctx.send(embed=e)
+                await post.add_reaction('🗑️')
+                deletable_messages.append(post.id)
+                return
+            else:
+                post = await ctx.send("That subreddit doesnot exist :(")
+                return
             
             
     @commands.Cog.listener()

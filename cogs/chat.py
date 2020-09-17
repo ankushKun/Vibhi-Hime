@@ -19,12 +19,15 @@ class Chat(commands.Cog):
     async def on_message(self,msg):
         
         if "vibhi" in msg.channel.name.lower() and not msg.author.bot:
-            async with msg.channel.typing():
-                x=str(kernel.respond(str(msg.content)))
-                if x.startswith("Oh, you are a poet. "):x="huh?, "+x[19:]
-                if "ALICE" in x: x.replace("ALICE","Vibhi")
-                delay(randint(1,2))
-            await msg.channel.send(x)
+            for ping in msg.mentions:
+                if self.bot.user.id == pind.id: 
+                    async with msg.channel.typing():
+                        x=str(kernel.respond(str(msg.content)))
+                        if x.startswith("Oh, you are a poet. "):x="huh?, "+x[19:]
+                        if "ALICE" in x: x.replace("ALICE","Vibhi")
+                        delay(randint(1,2))
+                    await msg.channel.send(x)
+                    return
             
     @commands.command(aliases=["setupchat","setupvibhi","vibhisetup","chat"])
     async def setuptalk(self,ctx):
