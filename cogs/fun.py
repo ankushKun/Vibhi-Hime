@@ -75,7 +75,7 @@ class Fun(commands.Cog):
             except NotFound:
                 exists = False
             return exists
-        with await ctx.typing():
+        async with ctx.typing():
             if sub_exists(sr):
                 sr = reddit.subreddit(sr)
                 posts = sr.new(limit=100)
