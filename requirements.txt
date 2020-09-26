@@ -9,3 +9,4 @@ youtube_dl
 praw
 bs4
 python-aiml
+googletrans

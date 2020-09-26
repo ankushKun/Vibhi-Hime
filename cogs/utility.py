@@ -9,6 +9,9 @@ import requests
 import random
 from bs4 import BeautifulSoup
 
+
+translator = Translator()
+
 class Utility(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
@@ -50,6 +53,7 @@ class Utility(commands.Cog):
             em=discord.Embed(title='Error',description='Could not find what you are looking for',color=0xFF0055)
             em.add_field(name=str(e))
             await ctx.send(embed=em)
+            
         
         
 

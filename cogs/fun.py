@@ -17,7 +17,7 @@ deletable_messages=[]
 class Fun(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
-        
+
     @commands.command()
     async def gif(self,ctx):
         q=ctx.message.content[5:]
@@ -38,7 +38,7 @@ class Fun(commands.Cog):
             urls=[]
             for i in range(len(tenorjson["results"])):
                 url = tenorjson["results"][i]["media"][0]["tinygif"]["url"]
-                
+
                 urls.append(url)
             if urls==[]:
                 await ctx.send(f"can't find any gifs related to {search_term}")
@@ -48,26 +48,26 @@ class Fun(commands.Cog):
             deletable_messages.append(gif_msg.id)
         else:
             tenorjson = None
-        
-        
+
+
     @commands.command()
     async def meme(self,ctx):
         sr = reddit.subreddit('memes')
         posts = sr.new(limit=100)
         urls,u_titles = [],[]
-        
+
         for m in posts:
             urls.append(m.url)
             u_titles.append(m.title)
-            
+
         n=random.randint(0,len(urls))
         e=discord.Embed(title=u_titles[n],color=0xFF0055)
         e.set_image(url=urls[n])
         await ctx.send(embed=e)
-        
-    @commands.command(aliases=["r/ "])
+
+    #@commands.command()
     async def reddit(self,ctx,*,sr):
-        
+
         def sub_exists(sub):
             exists = True
             try:
@@ -80,11 +80,11 @@ class Fun(commands.Cog):
                 sr = reddit.subreddit(sr)
                 posts = sr.new(limit=100)
                 urls,u_titles = [],[]
-                
+
                 for m in posts:
                     urls.append(m.url)
                     u_titles.append(m.title)
-                    
+
                 n=random.randint(0,len(urls))
                 e=discord.Embed(title=u_titles[n],color=0xFF0055)
                 e.set_image(url=urls[n])
@@ -95,14 +95,14 @@ class Fun(commands.Cog):
             else:
                 post = await ctx.send("That subreddit doesnot exist :(")
                 return
-            
-            
+
+
     @commands.Cog.listener()
     async def on_raw_reaction_add(self,reaction):
         if reaction.message_id in deletable_messages and reaction.emoji.name == '🗑️' and not reaction.member.bot:
             await self.bot.http.delete_message(reaction.channel_id, reaction.message_id)
             deletable_messages.remove(reaction.message_id)
-            
+
     #@commands.command()
     async def ask(self,ctx):
         response =['Yes of Course','Oh Yeah','Yep','Without a doubt',
@@ -110,9 +110,9 @@ class Fun(commands.Cog):
                    'idk','I cant tell now','How should I know','meh',
                    'that was a shitty question','what the . . .']
         await ctx.send(random.choice(response))
-        
-        
-    
+
+
+
     @commands.command()
     async def pun(self,ctx):
         pun = requests.get('https://sv443.net/jokeapi/v2/joke/Pun?blacklistFlags=nsfw,religious,political,racist,sexist&format=txt')
@@ -121,7 +121,7 @@ class Fun(commands.Cog):
             await ctx.send(embed=e)
         else:
             await ctx.send(f'```Error : {pun.status_code}```')
-            
+
     @commands.command()
     async def joke(self,ctx):
         jk = requests.get('https://sv443.net/jokeapi/v2/joke/Any?blacklistFlags=nsfw,religious,political,racist,sexist&format=txt')
@@ -130,14 +130,14 @@ class Fun(commands.Cog):
             await ctx.send(embed=e)
         else:
             await ctx.send(f'```Error : {jk.status_code}```')
-            
-            
+
+
     @commands.command()
     async def nuke(self,ctx,*,msg=''):
         e=discord.Embed(title="",description=f'{ctx.author.mention} NUKES {msg}',color=0xFF0055)
         e.set_image(url="https://i.pinimg.com/originals/47/12/89/471289cde2490c80f60d5e85bcdfb6da.gif")
         await ctx.send(embed=e)
-        
+
 
 def setup(bot):
     bot.add_cog(Fun(bot))
