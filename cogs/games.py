@@ -5,10 +5,11 @@ import random
 from time import sleep as delay
 
 
+
 class Games(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
-  
+
     #   ROCK PAPER SCISSOR
     @commands.command()
     async def rps(self,ctx,player):
@@ -25,7 +26,7 @@ class Games(commands.Cog):
                 await ctx.send('bot wins')
         else:
             await ctx.send('you noob\n``rock``  or  ``paper``  or  ``scissor``?')
-            
+
     # COIN TOSS
     @commands.command()
     async def toss(self,ctx,side=''):
@@ -37,24 +38,29 @@ class Games(commands.Cog):
         delay(0.5)
         tossed=random.choice(possibilities)
         await ctx.send(f'Its **{tossed}**')
-        
+
         if side!='':
             if side in head :side='heads'
             elif side in tail :side='tails'
-            
+
             if side==tossed: await ctx.send('You won')
             else: await ctx.send('You lost')
-            
+
     # ROLL DIE
     @commands.command()
     async def roll(self,ctx):
         await ctx.send("rolling dice . . .")
         delay(0.5)
         await ctx.send(f"rolled a **{random.choice(range(1,7))}**")
-        
-        
 
-    
+    # TIC TAC TOE
+    @commands.command(aliases = ["ttt"])
+    async def tictactoe(self,ctx):
+        pass
+
+
+
+
 
 def setup(bot):
     bot.add_cog(Games(bot))

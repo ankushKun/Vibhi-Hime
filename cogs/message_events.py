@@ -12,31 +12,31 @@ db=firebase.database()
 class Message_Events(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
-        
-    
+
+
     def afk_exists(self,uid):
         try:
             return uid in db.child("AFK").get().val()
         except Exception as e:
             pass
-        
-    
+
+
     def remove_afk(self,uid):
         if self.afk_exists(uid):
             db.child("AFK").child(uid).remove()
-            
-        
+
+
 
     def set_afk(self,uid,data):
         db.child("AFK").child(uid).set(data)
-        
+
     def get_info(self,uid):
         if self.afk_exists(uid):
             d=db.child("AFK").child(uid).get().val()
             return d
         else: return [-1,"error"]
 
-    
+
     @commands.Cog.listener()
     async def on_message(self,msg):
         if msg.author.bot:return
@@ -67,7 +67,7 @@ class Message_Events(commands.Cog):
             if msg.content.startswith(pfix):
                 msg.content = msg.content.replace(pfix,'v!').replace('v! ','v!')
                 await self.bot.process_commands(msg)
-                
+
 
     def get_prefix(self,uid):
         pfxs=db.child("PREFIX").child(uid).get().val()
@@ -79,7 +79,7 @@ class Message_Events(commands.Cog):
         if pfxs==None:pfxs=[]
         pfxs.append(pf)
         db.child("PREFIX").child(uid).set(pfxs)
-        
+
 
     def remove_prefix(self,uid,pf):
         pfxs=db.child("PREFIX").child(uid).get().val()
@@ -88,11 +88,11 @@ class Message_Events(commands.Cog):
         db.child("PREFIX").child(uid).set(pfxs)
 
 
-    
+
     @commands.command()
     async def prefix(self,ctx,do='',prfx=''):
         user=str(ctx.author.id)
-        
+
         if do=='add' and prfx!='':
             self.add_prefix(user,prfx)
             await ctx.send(f"> added custom prefix - {prfx}")
@@ -112,7 +112,7 @@ class Message_Events(commands.Cog):
 
 
 
-    
+
     @commands.command()
     async def afk(self,ctx,*,status=' '):
         guild_id=str(ctx.guild.id)
@@ -125,10 +125,10 @@ class Message_Events(commands.Cog):
         msg=f"{ctx.author.mention} is AFK\n{status}"
         await ctx.send(msg)
 
-             
-        
 
-    
+
+
+
 
 def setup(bot):
     bot.add_cog(Message_Events(bot))

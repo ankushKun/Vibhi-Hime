@@ -65,9 +65,8 @@ class Fun(commands.Cog):
         e.set_image(url=urls[n])
         await ctx.send(embed=e)
 
-    #@commands.command()
+    @commands.command()
     async def reddit(self,ctx,*,sr):
-
         def sub_exists(sub):
             exists = True
             try:
@@ -78,22 +77,25 @@ class Fun(commands.Cog):
         async with ctx.typing():
             if sub_exists(sr):
                 sr = reddit.subreddit(sr)
-                posts = sr.new(limit=100)
-                urls,u_titles = [],[]
+                if not sr.over18:
+                    posts = sr.new(limit=100)
+                    urls,u_titles = [],[]
 
-                for m in posts:
-                    urls.append(m.url)
-                    u_titles.append(m.title)
+                    for m in posts:
+                        urls.append(m.url)
+                        u_titles.append(m.title)
 
-                n=random.randint(0,len(urls))
-                e=discord.Embed(title=u_titles[n],color=0xFF0055)
-                e.set_image(url=urls[n])
-                post = await ctx.send(embed=e)
-                await post.add_reaction('🗑️')
-                deletable_messages.append(post.id)
-                return
+                    n=random.randint(0,len(urls))
+                    e=discord.Embed(title=u_titles[n],color=0xFF0055)
+                    e.set_image(url=urls[n])
+                    post = await ctx.send(embed=e)
+                    await post.add_reaction('🗑️')
+                    deletable_messages.append(post.id)
+                    return
+                else:
+                    await ctx.send("Use that in an NSFW channel >_<")
             else:
-                post = await ctx.send("That subreddit doesnot exist :(")
+                await ctx.send("That subreddit doesnot exist :(")
                 return
 
 
@@ -102,15 +104,6 @@ class Fun(commands.Cog):
         if reaction.message_id in deletable_messages and reaction.emoji.name == '🗑️' and not reaction.member.bot:
             await self.bot.http.delete_message(reaction.channel_id, reaction.message_id)
             deletable_messages.remove(reaction.message_id)
-
-    #@commands.command()
-    async def ask(self,ctx):
-        response =['Yes of Course','Oh Yeah','Yep','Without a doubt',
-                   'Nopee','Noooooo','Nuo','Na','-_-',
-                   'idk','I cant tell now','How should I know','meh',
-                   'that was a shitty question','what the . . .']
-        await ctx.send(random.choice(response))
-
 
 
     @commands.command()
