@@ -20,8 +20,8 @@ db=firebase.database()
 class Help(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
-  
-    
+
+
     @commands.command()
     async def help(self,ctx):
         global help_str
@@ -30,12 +30,13 @@ class Help(commands.Cog):
             rolepl=""
             for each in db.child("RP").child("CMD").get().val():
                 rolepl+=", "+each
-            
+
             h = discord.Embed(title='Vibhi Chan help',description='need help?',color=0xFF0055)
             h.add_field(name='__ABOUT__',value="Hi I'm Vibhi Chan\nPrefix : ``v!``\nFor custom prefix do `v!prefix`\nDeveloped by : ``weeblet~kun#1193``")
+            h.add_field(name='__CHAT WITH VIBHI__',value="Setup a channel to chat with the bot using **v!setupchat**")
             h.add_field(name='__SUPPORT__',value="If you find any bugs or would like to reccomend a feature [join this server](https://discord.gg/7cnnXB)")
             h.add_field(name='__INVITE__',value="[Invite me to your server (click here)](https://discord.com/api/oauth2/authorize?client_id=746984468199374908&permissions=8&scope=bot)")
-            h.add_field(name='__ROLEPLAY__',value=rolepl[:-2])
+            h.add_field(name='__ROLEPLAY__',value=rolepl[2:])
             h.add_field(name='__FUN__',value='gif, meme, ask, pun, joke, reddit, boom')
             h.add_field(name='__ANIME MANGA__',value='anime, animegif')
             h.add_field(name='__GAMES__',value='rps, toss, roll')
@@ -48,9 +49,8 @@ class Help(commands.Cog):
             await ctx.send(embed=h)
         except Exception as e:
             print(e)
-    
+
 
 def setup(bot):
     bot.add_cog(Help(bot))
     print('---> HELP LOADED')
-
