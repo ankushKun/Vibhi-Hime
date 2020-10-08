@@ -4,6 +4,8 @@ import os
 import praw
 import random
 from decouple import config
+from bs4 import BeautifulSoup
+import requests
 
 reddit = praw.Reddit(client_id=config('REDDIT_CLIENT_ID'),client_secret=config('REDDIT_CLIENT_SECRET'),user_agent=config('REDDIT_USER_AGENT').replace('-',' '))
 
@@ -46,6 +48,27 @@ class Anime(commands.Cog):
         e=discord.Embed(title=u_titles[n],color=0xFF0055)
         e.set_image(url=urls[n])
         await ctx.send(embed=e)
+
+    @commands.command()
+    async def anilist(self,ctx,uname=""):
+        if uname=="":
+            await ctx.send(f"{ctx.author.mention} you need to give a username `v!anilist <username>`")
+            return
+        URL = f"https://anilist.co/user/{uname}"
+        r = requests.get(URL)
+        soup = BeautifulSoup(r.content, 'html5lib')
+        stats = soup.findAll('div', attrs = {'class':'stat'})
+        desc = ""
+        for s in stats:
+            label = s.find("div",attrs = {'class':'label'})
+            value = s.find("div",attrs = {'class':'value'})
+            desc+=f"**{label.text} : {value.text}**\n"
+        if len(desc)==0:
+            desc="Can't find that user, make sure you have given the correct display name."
+        else:
+            desc+=f"[Full Profile]({URL})"
+        emb = discord.Embed(title=f"Anilist Stats for {uname}",description=desc,color=0xFF0055)
+        await ctx.send(embed=emb)
 
 
 def setup(bot):

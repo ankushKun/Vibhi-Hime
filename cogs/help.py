@@ -38,7 +38,7 @@ class Help(commands.Cog):
             h.add_field(name='__INVITE__',value="[Invite me to your server (click here)](https://discord.com/api/oauth2/authorize?client_id=746984468199374908&permissions=8&scope=bot)")
             h.add_field(name='__ROLEPLAY__',value=rolepl[2:])
             h.add_field(name='__FUN__',value='gif, meme, ask, pun, joke, reddit, boom')
-            h.add_field(name='__ANIME MANGA__',value='anime, animegif')
+            h.add_field(name='__ANIME MANGA__',value='anime, animegif, anilist')
             h.add_field(name='__GAMES__',value='rps, toss, roll')
             h.add_field(name='__UTILITY__',value='wiki, img')
             h.add_field(name='__MUSIC__',value='play, pause, resume, stop, skip, queue, join, shuffle, disconnect, remove')
