@@ -41,7 +41,7 @@ class Help(commands.Cog):
             h.add_field(name='__ANIME MANGA__',value='anime, animegif, anilist')
             h.add_field(name='__GAMES__',value='rps, toss, roll')
             h.add_field(name='__UTILITY__',value='wiki, img')
-            h.add_field(name='__MUSIC__',value='play, pause, resume, stop, skip, queue, join, shuffle, disconnect, remove')
+            #h.add_field(name='__MUSIC__',value='play, pause, resume, stop, skip, queue, join, shuffle, disconnect, remove')
             h.add_field(name='__MISC__',value='pfp, invite, stats, prefix')
             h.add_field(name='__MODERATION__',value='announce, dm, clear, ban, unban, kickout')
             h.add_field(name='__DEVELOPER LINKS__',value=links_str)
