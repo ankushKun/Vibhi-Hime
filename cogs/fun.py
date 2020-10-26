@@ -44,7 +44,7 @@ class Fun(commands.Cog):
                 await ctx.send(f"can't find any gifs related to {search_term}")
                 return
             gif_msg = await ctx.send(random.choice(urls))
-            await gif_msg.add_reaction('🗑️')
+            #await gif_msg.add_reaction('🗑️')
             deletable_messages.append(gif_msg.id)
         else:
             tenorjson = None
@@ -89,7 +89,7 @@ class Fun(commands.Cog):
                     e=discord.Embed(title=u_titles[n],color=0xFF0055)
                     e.set_image(url=urls[n])
                     post = await ctx.send(embed=e)
-                    await post.add_reaction('🗑️')
+                    #await post.add_reaction('🗑️')
                     deletable_messages.append(post.id)
                     return
                 else:
