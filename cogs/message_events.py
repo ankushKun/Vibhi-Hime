@@ -48,7 +48,7 @@ class Message_Events(commands.Cog):
             if self.afk_exists(tag):
                 data=self.get_info(tag)
                 self.remove_afk(tag)
-                no_more_afk=f"welcome back {msg.author.mention}.\n__{data[1]}__.\nYou were pinged __{data[0]}__ times."
+                no_more_afk=f"welcome back {msg.author.mention}.\n**{data[1]}**.\nYou were pinged **{data[0]}** times."
                 await msg.channel.send(no_more_afk)
                 # remove afk here
         for ping in msg.mentions:
