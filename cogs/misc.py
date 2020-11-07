@@ -2,23 +2,42 @@ import discord
 from discord.ext import commands
 import os
 from disputils import BotEmbedPaginator
-import random 
-
+import random
+from PIL import Image
+import requests
+from io import BytesIO
 
 
 class Misc(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
-        
-        
+
+
     @commands.command(aliases=["av","avatar"])
-    async def pfp(self,ctx, mn:discord.User=None):
-        if mn==None:
-            mn=ctx.author
-        p_emb = discord.Embed(title=" ", description="{}".format(mn.mention),color=0xFF0055)
-        p_emb.set_image(url=mn.avatar_url)
-        await ctx.send(embed=p_emb)
-    
+    async def pfp(self,ctx, m1:discord.User=None, m2:discord.User=None):
+        if m2==None:
+            if m1==None:
+                m1=ctx.author
+            p_emb = discord.Embed(title=" ", description="{}".format(m1.mention),color=0xFF0055)
+            p_emb.set_image(url=m1.avatar_url)
+            await ctx.send(embed=p_emb)
+        else: # TRYING TO SHOW TWO AVATARS TOGETHER
+            u1r = requests.get(m1.avatar_url)
+            u1img = Image.open(BytesIO(u1r.content)).resize((1240,1240))
+            u2r = requests.get(m2.avatar_url)
+            u2img = Image.open(BytesIO(u2r.content)).resize((1240,1240))
+            bg = Image.open('images/bg.png')
+            y=10
+            x=20
+            bg.paste(u1img,(x,y))
+            bg.paste(u2img,(x+1280,y))
+            bg.save(f'images/generated/{ctx.author.id}.png',quality=40)
+            file = discord.File(f"images/generated/{ctx.author.id}.png",filename='pic.jpg')
+            emb=discord.Embed(title="",description=f"{m1.mention} x {m2.mention}",color=0xFF0055)
+            emb.set_image(url="attachment://pic.jpg")
+            await ctx.send(file=file, embed=emb)
+            os.system(f"rm -rf images/generated/{ctx.author.id}.png")
+
     @commands.command()
     async def say(self,ctx):
         print(ctx.message.content)
@@ -28,7 +47,7 @@ class Misc(commands.Cog):
             #await ctx.send(ctx.message.content[5:])
             #await ctx.message.delete()
             pass
-    
+
     @commands.command()
     async def invite(self,ctx):
         emb=discord.Embed(title='INVITE **Vibhi**',color=0xFF0055)
@@ -43,8 +62,8 @@ class Misc(commands.Cog):
         emb.add_field(name="Latency(s)",value=str(round(self.bot.latency,3)),inline=False)
         emb.add_field(name=f"{ctx.guild} members",value=f'{ctx.guild.member_count}',inline=False)
         await ctx.send(embed=emb)
-        
-        
+
+
     @commands.command()
     async def servers(self,ctx):
         server_per_page=10
@@ -60,19 +79,18 @@ class Misc(commands.Cog):
                     break
                 j+=1
             embeds.append(emb)
-                
+
         paginator = BotEmbedPaginator(ctx, embeds)
         await paginator.run()
-        
-    
-        
-        
-    
-        
-    
-    
+
+
+
+
+
+
+
+
 
 def setup(bot):
     bot.add_cog(Misc(bot))
     print('---> MISC LOADED')
-
