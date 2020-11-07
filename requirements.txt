@@ -11,3 +11,4 @@ bs4
 python-aiml
 googletrans
 html5lib
+Pillow
