@@ -20,7 +20,8 @@ class Misc(commands.Cog):
                 m1=ctx.author
             p_emb = discord.Embed(title=" ", description="{}".format(m1.mention),color=0xFF0055)
             p_emb.set_image(url=m1.avatar_url)
-            await ctx.send(embed=p_emb)
+            #await ctx.send(embed=p_emb)
+            await ctx.send(m1.avatar_url)
         else: # TRYING TO SHOW TWO AVATARS TOGETHER
             u1r = requests.get(m1.avatar_url)
             u1img = Image.open(BytesIO(u1r.content)).resize((1240,1240))
@@ -35,7 +36,8 @@ class Misc(commands.Cog):
             file = discord.File(f"images/generated/{ctx.author.id}.png",filename='pic.jpg')
             emb=discord.Embed(title="",description=f"{m1.mention} x {m2.mention}",color=0xFF0055)
             emb.set_image(url="attachment://pic.jpg")
-            await ctx.send(file=file, embed=emb)
+            #await ctx.send(file=file, embed=emb)
+            await ctx.send(file=file)
             os.system(f"rm -rf images/generated/{ctx.author.id}.png")
 
     @commands.command()
