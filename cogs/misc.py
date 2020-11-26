@@ -49,6 +49,10 @@ class Misc(commands.Cog):
             #await ctx.send(ctx.message.content[5:])
             #await ctx.message.delete()
             pass
+    @commands.command()
+    async def say(self,ctx,*,msg):
+        if ctx.author.id==666578281142812673:
+            await ctx.send(msg)
 
     @commands.command()
     async def invite(self,ctx):
