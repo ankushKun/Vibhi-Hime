@@ -42,17 +42,9 @@ class Misc(commands.Cog):
 
     @commands.command()
     async def say(self,ctx):
-        print(ctx.message.content)
-        if "everyone" in ctx.message.content or "here" in ctx.message.content:
-            await ctx.send(random.choice(["bruh, I'm not gonna ping everyone","You bad human, dont ping everyone!","no","I'm not your waifu anymore"]))
-        else:
-            #await ctx.send(ctx.message.content[5:])
-            #await ctx.message.delete()
-            pass
-    @commands.command()
-    async def say(self,ctx,*,msg):
-        if ctx.author.id==666578281142812673:
-            await ctx.send(msg)
+        if ctz.author.id==666578281142812673:
+            await ctx.send(ctx.message.content[5:])
+            await ctx.message.delete()
 
     @commands.command()
     async def invite(self,ctx):
