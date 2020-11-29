@@ -81,7 +81,7 @@ class Fun(commands.Cog):
         async with ctx.typing():
             if sub_exists(sr):
                 sr = reddit.subreddit(sr)
-                if not sr.over18:
+                if not sr.over18 or ctx.channel.is_nsfw():
                     posts = sr.new(limit=100)
                     urls,u_titles = [],[]
 
