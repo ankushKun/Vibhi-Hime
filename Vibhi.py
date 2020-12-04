@@ -8,7 +8,10 @@ from asyncio import sleep
 
 print("---> BOT is waking up\n")
 
-bot = commands.Bot(command_prefix=["v!","V!"],case_insensitive=True)
+intents = discord.Intents.default()
+intents.members=True
+
+bot = commands.Bot(command_prefix=["v!","V!"],case_insensitive=True,intents=intents)
 bot.remove_command('help')
 
 def load_cogs():

@@ -6,6 +6,7 @@ import random
 from PIL import Image
 import requests
 from io import BytesIO
+from math import *
 
 
 class Misc(commands.Cog):
@@ -14,31 +15,38 @@ class Misc(commands.Cog):
 
 
     @commands.command(aliases=["av","avatar"])
-    async def pfp(self,ctx, m1:discord.User=None, m2:discord.User=None):
-        if m2==None:
-            if m1==None:
-                m1=ctx.author
-            p_emb = discord.Embed(title=" ", description="{}".format(m1.mention),color=0xFF0055)
-            p_emb.set_image(url=m1.avatar_url)
-            await ctx.send(embed=p_emb)
-            #await ctx.send(m1.avatar_url)
-        else: # TRYING TO SHOW TWO AVATARS TOGETHER
-            u1r = requests.get(m1.avatar_url)
-            u1img = Image.open(BytesIO(u1r.content)).resize((1240,1240))
-            u2r = requests.get(m2.avatar_url)
-            u2img = Image.open(BytesIO(u2r.content)).resize((1240,1240))
-            bg = Image.open('images/bg.png')
-            y=10
-            x=20
-            bg.paste(u1img,(x,y))
-            bg.paste(u2img,(x+1280,y))
-            bg.save(f'images/generated/{ctx.author.id}.png',quality=40)
-            file = discord.File(f"images/generated/{ctx.author.id}.png",filename='pic.jpg')
-            emb=discord.Embed(title="",description=f"{m1.mention} x {m2.mention}",color=0xFF0055)
-            emb.set_image(url="attachment://pic.jpg")
-            await ctx.send(file=file, embed=emb)
-            #await ctx.send(file=file)
-            os.system(f"rm -rf images/generated/{ctx.author.id}.png")
+    async def pfp(self,ctx):
+        members=ctx.message.mentions
+        if members==[]:members=[ctx.author]
+        imgs=[]
+        
+        for mem in members:
+            url = requests.get(mem.avatar_url)
+            im = Image.open(BytesIO(url.content)).resize((500,500))
+            imgs.append(im)
+        s = ceil(len(members)/2)
+        if len(members)==2:s+=2
+        print(s)
+        i=0
+        bg = Image.new(mode = "RGBA", size = (500*s, 500*s))
+        for y in range(0,s):
+            for x in range(0,s):
+                try:
+                    bg.paste(imgs[i],(500*x,500*y))
+                    i+=1
+                except Exception as e:
+                    print(e,i)
+                    pass
+        print(x,y)
+        imageBox = bg.getbbox()
+        bg=bg.crop(imageBox)
+        bg.save(f'images/generated/{ctx.author.id}.png',quality=10)
+        file = discord.File(f"images/generated/{ctx.author.id}.png",filename='pic.jpg')
+        emb=discord.Embed(title="",description=f"",color=0xFF0055)
+        emb.set_image(url="attachment://pic.jpg")
+        await ctx.send(file=file, embed=emb)
+        #await ctx.send(file=file)
+        os.system(f"rm -rf images/generated/{ctx.author.id}.png")
 
     @commands.command()
     async def say(self,ctx):
@@ -80,6 +88,36 @@ class Misc(commands.Cog):
 
         paginator = BotEmbedPaginator(ctx, embeds)
         await paginator.run()
+        
+    @commands.command()
+    async def pfpall(self,ctx):
+        members=ctx.guild.members
+        l = len(members)
+        msg = await ctx.send(f"In progress ({l})")
+        s = ceil(len(members)/2)
+        if len(members)==2:s+=2
+        print(s)
+        i=0
+        bg = Image.new(mode = "RGBA", size = (100*s, 100*s))
+        for y in range(0,s):
+            for x in range(0,s):
+                try:
+                    url = requests.get(members[i].avatar_url)
+                    im = Image.open(BytesIO(url.content)).resize((100,100))
+                    bg.paste(im,(100*x,100*y))
+                    if i%10==0:print(i)#await msg.edit(content=f"In progress `({i}/{l})`")
+                    i+=1
+                except Exception as e:
+                    print(e,i)
+                    break
+        print(x,y)
+        imageBox = bg.getbbox()
+        bg=bg.crop(imageBox)
+        bg.save(f'images/generated/{ctx.author.id}.png',quality=5)
+        file = discord.File(f"images/generated/{ctx.author.id}.png",filename='pic.jpg')
+        await ctx.send(file=file)
+        #await ctx.send(file=file)
+        os.system(f"rm -rf images/generated/{ctx.author.id}.png")
 
 
 
