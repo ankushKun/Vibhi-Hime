@@ -89,7 +89,7 @@ class Misc(commands.Cog):
         paginator = BotEmbedPaginator(ctx, embeds)
         await paginator.run()
         
-    @commands.command()
+    #@commands.command()
     async def pfpall(self,ctx):
         mem=ctx.guild.members
         members=[]
