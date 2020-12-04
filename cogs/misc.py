@@ -91,7 +91,13 @@ class Misc(commands.Cog):
         
     @commands.command()
     async def pfpall(self,ctx):
-        members=ctx.guild.members
+        mem=ctx.guild.members
+        members=[]
+        for mbr in mem:
+            if mbr.bot==False:
+                members.append(mbr)
+        print(members)
+        #return
         l = len(members)
         msg = await ctx.send(f"In progress ({l})")
         s = ceil(len(members)/4)
