@@ -94,7 +94,7 @@ class Misc(commands.Cog):
         members=ctx.guild.members
         l = len(members)
         msg = await ctx.send(f"In progress ({l})")
-        s = ceil(len(members)/2)
+        s = ceil(len(members)/4)
         if len(members)==2:s+=2
         print(s)
         i=0
