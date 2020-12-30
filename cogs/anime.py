@@ -50,7 +50,7 @@ class Anime(commands.Cog):
         await ctx.send(embed=e)
 
     @commands.command()
-    async def anilist(self,ctx,uname=""):
+    async def anilist(self,ctx,*,uname=""):
         if uname=="":
             await ctx.send(f"{ctx.author.mention} you need to give a username `v!anilist <username>`")
             return
@@ -69,7 +69,35 @@ class Anime(commands.Cog):
             desc+=f"[Full Profile]({URL})"
         emb = discord.Embed(title=f"Anilist Stats for {uname}",description=desc,color=0xFF0055)
         await ctx.send(embed=emb)
+        
+    @commands.command()
+    async def MAL(self,ctx,*,uname=""):
+        if uname=="":
+            await ctx.send(f"{ctx.author.mention} you need to give a username `v!MAL <username>`")
+            return
+        url = f"https://myanimelist.net/profile/{uname}"
 
+        webpage = requests.get(url)
+        soup = BeautifulSoup(webpage.content,"html5lib")
+
+        total = soup.find_all("span",{"class":"di-ib fl-r"})
+        score = soup.find_all("span",{"class":"score-label"})
+        
+        if len(total) == 0:
+            dsc="Can't find that user, make sure you have given the correct username."
+        else:
+            dsc = f"""
+**Total Anime : {total[0].text}
+Episodes Watched : {total[2].text}
+Mean Score : {score[0].text}
+Manga Read : {total[3].text}
+Chapters Read : {total[5].text}
+Mean Score : {score[2].text}**
+"""
+            dsc += f"[Full Profile]({url})"
+            
+        emb = discord.Embed(title=f"MAL Stats for {uname}",description=dsc,color=0xFF0055)
+        await ctx.send(embed=emb)
 
 def setup(bot):
     bot.add_cog(Anime(bot))
