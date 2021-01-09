@@ -13,7 +13,7 @@ class Misc(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
 
-
+    """ #matrix
     @commands.command(aliases=["av","avatar"])
     async def pfp(self,ctx):
         members=ctx.message.mentions
@@ -47,10 +47,38 @@ class Misc(commands.Cog):
         await ctx.send(file=file, embed=emb)
         #await ctx.send(file=file)
         os.system(f"rm -rf images/generated/{ctx.author.id}.png")
-
+    """
+    @commands.command(aliases=["av","avatar"])
+    async def pfp(self,ctx):
+        members=ctx.message.mentions
+        if members==[]:members=[ctx.author]
+        imgs=[]
+        
+        for mem in members:
+            url = requests.get(mem.avatar_url)
+            im = Image.open(BytesIO(url.content)).resize((500,500))
+            imgs.append(im)
+        s=len(imgs)
+        bg = Image.new(mode = "RGBA", size = (500*s, 500))
+        i=0
+        for x in range(0,s):
+            try:
+                bg.paste(imgs[i],(500*x,0))
+                i+=1
+            except Exception as e:
+                print(e,i)
+                pass
+        bg.save(f'images/generated/{ctx.author.id}.png',quality=10)
+        file = discord.File(f"images/generated/{ctx.author.id}.png",filename='pic.jpg')
+        emb=discord.Embed(title="",description=f"",color=0xFF0055)
+        emb.set_image(url="attachment://pic.jpg")
+        await ctx.send(file=file, embed=emb)
+        #await ctx.send(file=file)
+        os.system(f"rm -rf images/generated/{ctx.author.id}.png")
+        
     @commands.command()
     async def say(self,ctx):
-        if ctz.author.id==666578281142812673:
+        if ctx.author.id==666578281142812673:
             await ctx.send(ctx.message.content[5:])
             await ctx.message.delete()
 
