@@ -12,3 +12,4 @@ python-aiml
 googletrans
 html5lib
 Pillow
+gogoanime-api
