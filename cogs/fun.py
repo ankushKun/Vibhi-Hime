@@ -152,16 +152,6 @@ class Fun(commands.Cog):
 
     @commands.command()
     async def ship(self, ctx, m1: discord.User = None, m2: discord.User = None):
-        if (m1.id == 746984468199374908 and ctx.author.id == 666578281142812673) or (
-            m1.id == 666578281142812673 and ctx.author.id == 746984468199374908
-        ):
-            pass
-        elif ctx.author.id != 666578281142812673 and (
-            m1.id == 746984468199374908 or m2.id == 746984468199374908
-        ):
-            await ctx.send(f"I belong to `weeblet~kun#1193` <3")
-            return
-
         def center_text(img, font, text):
             strip_width, strip_height = 2560, 1261
             draw = ImageDraw.Draw(img)
