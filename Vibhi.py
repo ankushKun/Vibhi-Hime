@@ -11,7 +11,9 @@ print("---> BOT is waking up\n")
 intents = discord.Intents.default()
 intents.members = True
 
-bot = commands.Bot(command_prefix=["v!", "V!"], case_insensitive=True, intents=intents)
+bot = commands.AutoShardedBot(
+    command_prefix=["v!", "V!"], case_insensitive=True, intents=intents
+)
 bot.remove_command("help")
 
 
