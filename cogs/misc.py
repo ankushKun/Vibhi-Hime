@@ -102,7 +102,7 @@ class Misc(commands.Cog):
         frames_imgs[0].save(
             f"images/generated/{ctx.author.id}.gif",
             save_all=True,
-            append_images=frames_imgs[:-1],
+            append_images=frames_imgs,
             loop=0,
             quality=1,
         )
