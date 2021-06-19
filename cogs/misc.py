@@ -129,7 +129,7 @@ class Misc(commands.Cog):
             i = 0
             for x in range(0, s):
                 try:
-                    bg.paste(imgs[i], (500 * x, 0))
+                    bg.paste(imgs[i].resize((500, 500)), (500 * x, 0))
                     i += 1
                 except Exception as e:
                     print(e, i)
