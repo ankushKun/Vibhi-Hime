@@ -54,65 +54,102 @@ class Misc(commands.Cog):
         members = ctx.message.mentions
         if members == []:
             members = [ctx.author]
+
+        animated = []
+        for m in members:
+            animated.append(m.is_avatar_animated())
+
         imgs = []
         for mem in members:
             url = requests.get(mem.avatar_url)
-            im = Image.open(BytesIO(url.content))
+            im = Image.open(BytesIO(url.content)).convert("RGBA")
             imgs.append(im)
 
-        frames = []
-
         s = len(imgs)
-        d = 250
-        bg = Image.new(mode="RGBA", size=(d * s, d))
+        print(animated)
+        all_animated = all(animated)
+        all_not_animated = not any(animated)
 
-        for gif in imgs:
-            f = []
+        print(all_animated, all_not_animated)
+        if all_animated:  ############ ANIMATED ############
+            frames = []
+
+            s = len(imgs)
+            d = 250
+            bg = Image.new(mode="RGBA", size=(d * s, d))
+
+            for gif in imgs:
+                f = []
+                while True:
+                    try:
+                        gif.seek(gif.tell() + 1)
+                        f.append(gif.copy().resize((d, d)))
+                    except:
+                        frames.append(f)
+                        break
+
+            frames_imgs = []
+            s = len(frames)
+            f_no = 0
             while True:
-                try:
-                    gif.seek(gif.tell() + 1)
-                    f.append(gif.copy().resize((d, d)))
-                except:
-                    frames.append(f)
+                i = 0
+                brk = False
+                bg = Image.new(mode="RGBA", size=(d * s, d))
+                for x in range(0, s):
+                    try:
+                        bg.paste(frames[i][f_no], (d * x, 0))
+                        i += 1
+                        frames_imgs.append(bg)
+                    except Exception as e:
+                        print(e, i)
+                        brk = True
+                f_no += 1
+                if brk:
                     break
 
-        frames_imgs = []
-        s = len(frames)
-        f_no = 0
-        while True:
+            if frames_imgs == []:
+                frames_imgs = imgs
+
+            # print(frames_imgs)
+            frames_imgs[0].save(
+                f"images/generated/{ctx.author.id}.gif",
+                save_all=True,
+                append_images=frames_imgs[:],
+                loop=0,
+                quality=1,
+            )
+            file = discord.File(
+                f"images/generated/{ctx.author.id}.gif", filename="pic.gif"
+            )
+            emb = discord.Embed(title="", description=f"", color=0xFF0055)
+            emb.set_image(url="attachment://pic.gif")
+        elif all_not_animated:
+            s = len(imgs)
+            bg = Image.new(mode="RGBA", size=(500 * s, 500))
             i = 0
-            brk = False
-            bg = Image.new(mode="RGBA", size=(d * s, d))
             for x in range(0, s):
                 try:
-                    bg.paste(frames[i][f_no], (d * x, 0))
+                    bg.paste(imgs[i], (500 * x, 0))
                     i += 1
-                    frames_imgs.append(bg)
                 except Exception as e:
                     print(e, i)
-                    brk = True
-            f_no += 1
-            if brk:
-                break
+                    pass
+            bg.save(f"images/generated/{ctx.author.id}.png", quality=10)
+            file = discord.File(
+                f"images/generated/{ctx.author.id}.png", filename="pic.jpg"
+            )
+            emb = discord.Embed(title="", description=f"", color=0xFF0055)
+            emb.set_image(url="attachment://pic.jpg")
 
-        if frames_imgs == []:
-            frames_imgs = imgs
-
-        # print(frames_imgs)
-        frames_imgs[0].save(
-            f"images/generated/{ctx.author.id}.gif",
-            save_all=True,
-            append_images=frames_imgs,
-            loop=0,
-            quality=1,
-        )
-
-        file = discord.File(f"images/generated/{ctx.author.id}.gif", filename="pic.gif")
-        emb = discord.Embed(title="", description=f"", color=0xFF0055)
-        emb.set_image(url="attachment://pic.gif")
+        else:
+            await ctx.send(
+                f"All avatars should be either animated or non animated, and not a mixture of both :<"
+            )
+            return
         await ctx.send(file=file, embed=emb)
         # await ctx.send(file=file)
         os.system(f"rm -rf images/generated/{ctx.author.id}.gif")
+        os.system(f"rm -rf images/generated/{ctx.author.id}.png")
 
     @commands.command()
     async def say(self, ctx):
