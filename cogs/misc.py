@@ -54,6 +54,11 @@ class Misc(commands.Cog):
         members = ctx.message.mentions
         if members == []:
             members = [ctx.author]
+        if len(members) == 1:
+            emb = discord.Embed(title="", description=f"", color=0xFF0055)
+            emb.set_image(url=members[0].avatar_url)
+            await ctx.send(embed=emb)
+            return
 
         animated = []
         for m in members:
@@ -62,19 +67,19 @@ class Misc(commands.Cog):
         imgs = []
         for mem in members:
             url = requests.get(mem.avatar_url)
-            im = Image.open(BytesIO(url.content)).convert("RGBA")
+            im = Image.open(BytesIO(url.content))
             imgs.append(im)
 
         s = len(imgs)
-        print(animated)
+        # print(animated)
         all_animated = all(animated)
         all_not_animated = not any(animated)
-
-        print(all_animated, all_not_animated)
+        # print(all_animated, all_not_animated)
         if all_animated:  ############ ANIMATED ############
             frames = []
 
             s = len(imgs)
+            print("S", s)
             d = 250
             bg = Image.new(mode="RGBA", size=(d * s, d))
 
@@ -84,7 +89,7 @@ class Misc(commands.Cog):
                     try:
                         gif.seek(gif.tell() + 1)
                         f.append(gif.copy().resize((d, d)))
-                    except:
+                    except Exception as e:
                         frames.append(f)
                         break
 
@@ -106,7 +111,7 @@ class Misc(commands.Cog):
                 f_no += 1
                 if brk:
                     break
-
+            # print(frames_imgs)
             if frames_imgs == []:
                 frames_imgs = imgs
 
@@ -114,7 +119,7 @@ class Misc(commands.Cog):
             frames_imgs[0].save(
                 f"images/generated/{ctx.author.id}.gif",
                 save_all=True,
-                append_images=frames_imgs[:-1],
+                append_images=frames_imgs[:],
                 loop=0,
                 quality=1,
             )
