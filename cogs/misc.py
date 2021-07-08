@@ -205,8 +205,8 @@ class Misc(commands.Cog):
     @commands.command()
     async def patgif(self, ctx):
         avatar = ctx.author.avatar_url
-        if len(message.mentions) > 0:
-            avatar = message.mentions[0]
+        if len(ctx.message.mentions) > 0:
+            avatar = ctx.message.mentions[0]
 
         i1 = requests.get(avatar)
         im1 = Image.open(BytesIO(i1.content)).resize((500, 500)).convert("RGBA")
