@@ -1,4 +1,5 @@
 import discord
+from discord import message
 from discord.ext import commands
 import os
 from disputils import BotEmbedPaginator
@@ -128,7 +129,7 @@ class Misc(commands.Cog):
             )
             emb = discord.Embed(title="", description=f"", color=0xFF0055)
             emb.set_image(url="attachment://pic.gif")
-        elif all_not_animated:
+        else:
             s = len(imgs)
             bg = Image.new(mode="RGBA", size=(500 * s, 500))
             i = 0
@@ -146,11 +147,6 @@ class Misc(commands.Cog):
             emb = discord.Embed(title="", description=f"", color=0xFF0055)
             emb.set_image(url="attachment://pic.jpg")
 
-        else:
-            await ctx.send(
-                f"All avatars should be either animated or non animated, and not a mixture of both :<"
-            )
-            return
         await ctx.send(file=file, embed=emb)
         # await ctx.send(file=file)
         os.system(f"rm -rf images/generated/{ctx.author.id}.gif")
@@ -209,6 +205,8 @@ class Misc(commands.Cog):
     @commands.command()
     async def patgif(self, ctx):
         avatar = ctx.author.avatar_url
+        if len(message.mentions) > 0:
+            avatar = message.mentions[0]
 
         i1 = requests.get(avatar)
         im1 = Image.open(BytesIO(i1.content)).resize((500, 500)).convert("RGBA")
