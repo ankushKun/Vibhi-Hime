@@ -8,7 +8,7 @@ i1 = requests.get(avatar)
 im1 = Image.open(BytesIO(i1.content)).resize((500, 500)).convert("RGBA")
 
 
-pat_gif = Image.open("pat.gif")
+pat_gif = Image.open("images/pat.gif")
 pat_frames = []
 
 d = 500
@@ -29,7 +29,7 @@ final_frames = []
 p = 0
 for y in y_pos:
     blank = Image.new("RGBA", (500, 500))
-    blank.paste(im1.resize((400, 400 - y)), (100, y))  # pastes avatar
+    blank.paste(im1.resize((400, 500 - y)), (100, y))  # pastes avatar
     blank.paste(pat_frames[p], (0, 0), pat_frames[p])
     final_frames.append(blank)
     p += 1
@@ -42,4 +42,5 @@ final_frames[0].save(
     loop=0,
     quality=1,
     duration=pat_gif.info["duration"],
+    format="GIF",
 )
