@@ -9,7 +9,6 @@ from asyncio import sleep
 print("---> BOT is waking up\n")
 
 intents = discord.Intents.default()
-intents.members = True
 
 bot = commands.AutoShardedBot(
     command_prefix=["v!", "V!"], case_insensitive=True, intents=intents
@@ -38,11 +37,16 @@ def load_cogs():
 @loop(seconds=240)
 async def presence_change():
     await bot.change_presence(
-        activity=discord.Activity(type=discord.ActivityType.watching, name="Anime")
+        activity=discord.Activity(
+            type=discord.ActivityType.watching,
+            name="https://VibhiChan.github.io\n\nWebsite made by my senpai <3",
+        )
     )
     await sleep(60)
     await bot.change_presence(
-        activity=discord.Activity(type=discord.ActivityType.playing, name="Pokemon")
+        activity=discord.Activity(
+            type=discord.ActivityType.watching, name="Anime with weeblet senpai"
+        )
     )
     await sleep(60)
     await bot.change_presence(
@@ -52,7 +56,9 @@ async def presence_change():
     )
     await sleep(60)
     await bot.change_presence(
-        activity=discord.Activity(type=discord.ActivityType.streaming, name="Anime")
+        activity=discord.Activity(
+            type=discord.ActivityType.playing, name="with weeblet~kun <3"
+        )
     )
     await sleep(60)
 
@@ -70,12 +76,7 @@ async def reload_cogs(ctx):
 async def on_ready():
     print(f"---> Logged in as : {bot.user.name} , ID : {bot.user.id}")
     print(f"---> Total Servers : {len(bot.guilds)}\n")
-    # presence_change.start()
-    await bot.change_presence(
-        activity=discord.Activity(
-            type=discord.ActivityType.playing, name="with weeblet~kun"
-        )
-    )
+    presence_change.start()
     load_cogs()
     print("\n---> BOT is awake\n")
 
