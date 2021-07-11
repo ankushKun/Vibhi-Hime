@@ -9,6 +9,7 @@ from asyncio import sleep
 print("---> BOT is waking up\n")
 
 intents = discord.Intents.default()
+intents.members = True
 
 bot = commands.AutoShardedBot(
     command_prefix=["v!", "V!"], case_insensitive=True, intents=intents

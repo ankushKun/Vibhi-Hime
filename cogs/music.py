@@ -87,10 +87,7 @@ class Music(commands.Cog):
     async def skip(self, ctx):
         player = music.get_player(guild_id=ctx.guild.id)
         data = await player.skip(force=True)
-        if len(data) == 2:
-            await ctx.send(f"Skipped from **{data[0].name}** to **{data[1].name}**")
-        else:
-            await ctx.send(f"Skipped **{data[0].name}**")
+        await ctx.send(f"Skipped **{data[0].name}**")
 
     @commands.command()
     async def volume(self, ctx, vol):
