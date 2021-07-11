@@ -177,6 +177,7 @@ class Misc(commands.Cog):
         emb.add_field(
             name=f"{ctx.guild} members", value=f"{ctx.guild.member_count}", inline=False
         )
+
         await ctx.send(embed=emb)
 
     @commands.command()
