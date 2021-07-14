@@ -47,9 +47,7 @@ class Help(commands.Cog):
             )
             h.add_field(name="__ROLEPLAY__", value=(rolepl[2:1990] + "..."))
             h.add_field(name="__FUN__", value="gif, meme, ask, pun, joke, reddit, boom")
-            h.add_field(
-                name="__ANIME MANGA__", value="anime(WIP), animegif, anilist, mal"
-            )
+            h.add_field(name="__ANIME MANGA__", value="animegif, anilist, mal")
             h.add_field(name="__GAMES__", value="rps, toss, roll")
             h.add_field(name="__UTILITY__", value="wiki, img, splitimg")
             h.add_field(

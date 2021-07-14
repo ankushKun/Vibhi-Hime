@@ -19,46 +19,46 @@ class Anime(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    # @commands.command()
+    # async def anime(self, ctx, *, name="redo of healer"):
+    #     anime_search = gogo.get_search_results(query=name)
+    #     await ctx.send(anime_search)
+
     @commands.command()
-    async def anime(self, ctx, *, name="redo of healer"):
-        anime_search = gogo.get_search_results(query=name)
-        await ctx.send(anime_search)
+    async def anime(self, ctx):
+        irl = reddit.subreddit("anime_irl")
+        mem = reddit.subreddit("animememes")
+        posts_irl = irl.new(limit=50)
+        posts_mem = mem.new(limit=50)
+        urls, u_titles = [], []
 
-    # @commands.command()
-    # async def anime(self, ctx):
-    #     irl = reddit.subreddit("anime_irl")
-    #     mem = reddit.subreddit("animememes")
-    #     posts_irl = irl.new(limit=50)
-    #     posts_mem = mem.new(limit=50)
-    #     urls, u_titles = [], []
+        for m in posts_irl:
+            urls.append(m.url)
+            u_titles.append(m.title)
 
-    #     for m in posts_irl:
-    #         urls.append(m.url)
-    #         u_titles.append(m.title)
+        for n in posts_mem:
+            urls.append(n.url)
+            u_titles.append(n.title)
 
-    #     for n in posts_mem:
-    #         urls.append(n.url)
-    #         u_titles.append(n.title)
+        n = random.randint(0, len(urls))
+        e = discord.Embed(title=u_titles[n], color=0xFF0055)
+        e.set_image(url=urls[n])
+        await ctx.send(embed=e)
 
-    #     n = random.randint(0, len(urls))
-    #     e = discord.Embed(title=u_titles[n], color=0xFF0055)
-    #     e.set_image(url=urls[n])
-    #     await ctx.send(embed=e)
+    @commands.command()
+    async def animegif(self, ctx):
+        sr = reddit.subreddit("animegifs")
+        posts = sr.new(limit=100)
+        urls, u_titles = [], []
 
-    # @commands.command()
-    # async def animegif(self, ctx):
-    #     sr = reddit.subreddit("animegifs")
-    #     posts = sr.new(limit=100)
-    #     urls, u_titles = [], []
+        for m in posts:
+            urls.append(m.url)
+            u_titles.append(m.title)
 
-    #     for m in posts:
-    #         urls.append(m.url)
-    #         u_titles.append(m.title)
-
-    #     n = random.randint(0, len(urls))
-    #     e = discord.Embed(title=u_titles[n], color=0xFF0055)
-    #     e.set_image(url=urls[n])
-    #     await ctx.send(embed=e)
+        n = random.randint(0, len(urls))
+        e = discord.Embed(title=u_titles[n], color=0xFF0055)
+        e.set_image(url=urls[n])
+        await ctx.send(embed=e)
 
     @commands.command()
     async def anilist(self, ctx, *, uname=""):

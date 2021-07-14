@@ -2,7 +2,6 @@ import discord
 from discord import message
 from discord.ext import commands
 import os
-from disputils import BotEmbedPaginator
 import random
 from PIL import Image
 import requests
@@ -151,57 +150,6 @@ class Misc(commands.Cog):
         # await ctx.send(file=file)
         os.system(f"rm -rf images/generated/{ctx.author.id}.gif")
         os.system(f"rm -rf images/generated/{ctx.author.id}.png")
-
-    @commands.command()
-    async def say(self, ctx):
-        if ctx.author.id == 666578281142812673:
-            await ctx.send(ctx.message.content[5:])
-            await ctx.message.delete()
-
-    @commands.command()
-    async def invite(self, ctx):
-        emb = discord.Embed(title="INVITE **Vibhi**", color=0xFF0055)
-        inv = "[Invite link](https://discord.com/api/oauth2/authorize?client_id=746984468199374908&permissions=8&scope=bot)"
-        emb.add_field(name="direct invite ", value=inv, inline=False)
-        await ctx.send(embed=emb)
-
-    @commands.command()
-    async def stats(self, ctx):
-        emb = discord.Embed(title="**Vibhi STATS**", color=0xFF0055)
-        emb.add_field(
-            name="Total Servers", value=str(len(self.bot.guilds)), inline=False
-        )
-        emb.add_field(
-            name="Latency(s)", value=str(round(self.bot.latency, 3)), inline=False
-        )
-        emb.add_field(
-            name=f"{ctx.guild} members", value=f"{ctx.guild.member_count}", inline=False
-        )
-
-        await ctx.send(embed=emb)
-
-    @commands.command()
-    async def servers(self, ctx):
-        server_per_page = 10
-        svr = self.bot.guilds
-        embeds = []
-        for i in range(0, len(svr), server_per_page):
-            emb = discord.Embed(title=f"**Vibhi SERVERS [{len(svr)}]**", color=0xFF0055)
-            j = i
-            while j < i + server_per_page:
-                try:
-                    emb.add_field(
-                        name=svr[j],
-                        value=f"members : {svr[j].member_count}",
-                        inline=False,
-                    )
-                except:
-                    break
-                j += 1
-            embeds.append(emb)
-
-        paginator = BotEmbedPaginator(ctx, embeds)
-        await paginator.run()
 
     @commands.command()
     async def patgif(self, ctx):

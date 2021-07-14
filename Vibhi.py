@@ -40,7 +40,7 @@ async def presence_change():
     await bot.change_presence(
         activity=discord.Activity(
             type=discord.ActivityType.watching,
-            name="https://VibhiChan.github.io\n\nWebsite made by my senpai <3",
+            name="https://Vibhi.me\n\nWebsite made by my senpai <3",
         )
     )
     await sleep(60)
@@ -71,6 +71,26 @@ async def reload_cogs(ctx):
     await ctx.send("> Vibhi unloaded cogs")
     load_cogs()
     await ctx.send("> Vibhi loaded cogs")
+
+
+@bot.command()
+async def invite(ctx):
+    emb = discord.Embed(title="INVITE **Vibhi**", color=0xFF0055)
+    inv = "[Invite link](https://discord.com/api/oauth2/authorize?client_id=746984468199374908&permissions=8&scope=bot)"
+    emb.add_field(name="direct invite ", value=inv, inline=False)
+    await ctx.send(embed=emb)
+
+
+@bot.command()
+async def ping(ctx):
+    await ctx.send(f"{round(bot.latency, 3) * 1000}ms")
+
+
+@bot.command()
+async def say(ctx):
+    if ctx.author.id == 666578281142812673:
+        await ctx.send(ctx.message.content[5:])
+        await ctx.message.delete()
 
 
 @bot.event

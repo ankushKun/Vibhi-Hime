@@ -8,6 +8,7 @@ from ast import literal_eval
 import requests
 import random
 from bs4 import BeautifulSoup
+from disputils import BotEmbedPaginator
 
 
 class Utility(commands.Cog):
@@ -63,6 +64,47 @@ class Utility(commands.Cog):
             )
             em.add_field(name=str(e))
             await ctx.send(embed=em)
+
+    @commands.command()
+    async def stats(self, ctx):
+        emb = discord.Embed(title="**Vibhi STATS**", color=0xFF0055)
+        emb.add_field(
+            name="Total Servers", value=str(len(self.bot.guilds)), inline=False
+        )
+        emb.add_field(
+            name="Latency(s)",
+            value=str(round(self.bot.latency, 3) * 1000),
+            inline=False,
+        )
+        emb.add_field(
+            name=f"{ctx.guild} members", value=f"{ctx.guild.member_count}", inline=False
+        )
+
+        await ctx.send(embed=emb)
+
+    @commands.is_owner()
+    @commands.command()
+    async def servers(self, ctx):
+        server_per_page = 10
+        svr = self.bot.guilds
+        embeds = []
+        for i in range(0, len(svr), server_per_page):
+            emb = discord.Embed(title=f"**Vibhi SERVERS [{len(svr)}]**", color=0xFF0055)
+            j = i
+            while j < i + server_per_page:
+                try:
+                    emb.add_field(
+                        name=svr[j],
+                        value=f"members : {svr[j].member_count}",
+                        inline=False,
+                    )
+                except:
+                    break
+                j += 1
+            embeds.append(emb)
+
+        paginator = BotEmbedPaginator(ctx, embeds)
+        await paginator.run()
 
 
 def setup(bot):
