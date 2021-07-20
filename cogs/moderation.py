@@ -18,19 +18,19 @@ class Moderation(commands.Cog):
             await ctx.send(embed=e)
             await u.send(f"You were warned in {ctx.guild.name}\n reason : {reason}")
 
-    @commands.command()
-    async def announce(self, ctx, *, msg):
-        if ctx.message.author.guild_permissions.administrator:
-            m = ctx.guild.members
-            for u in m:
-                print(u)
-                try:
-                    if not u.bot:
-                        await u.send(msg)
-                except:
-                    await ctx.send("could not to send to {}".format(u.mention))
-        else:
-            await ctx.send(f"{u.mention} you dont have perms, lol")
+    # @commands.command()
+    # async def announce(self, ctx, *, msg):
+    #     if ctx.message.author.guild_permissions.administrator:
+    #         m = ctx.guild.members
+    #         for u in m:
+    #             print(u)
+    #             try:
+    #                 if not u.bot:
+    #                     await u.send(f"{ctx.author} from {ctx.guild} announced\n{msg}")
+    #             except:
+    #                 await ctx.send("could not to send to {}".format(u.mention))
+    #     else:
+    #         await ctx.send(f"{u.mention} you dont have perms, lol")
 
     @commands.command(aliases=["clear"])
     async def cls(self, ctx, l):
@@ -42,16 +42,16 @@ class Moderation(commands.Cog):
         else:
             await ctx.send(f"{ctx.message.author.mention} you dont have perms, lol")
 
-    @commands.command()
-    async def dm(self, ctx, u: discord.User, *, msg):
-        if ctx.message.author.guild_permissions.administrator:
-            try:
-                await u.send(msg)
-            except Exception as e:
-                await ctx.send(f"could not to send to {u.mention}")
-                await ctx.send(f"||{e}||")
-        else:
-            await ctx.send(f"{ctx.message.author.mention} you dont have perms, lol")
+    # @commands.command()
+    # async def dm(self, ctx, u: discord.User, *, msg):
+    #     if ctx.message.author.guild_permissions.administrator:
+    #         try:
+    #             await u.send(f"{ctx.author} from {ctx.guild} sent you a message\n{msg}")
+    #         except Exception as e:
+    #             await ctx.send(f"could not to send to {u.mention}")
+    #             await ctx.send(f"||{e}||")
+    #     else:
+    #         await ctx.send(f"{ctx.message.author.mention} you dont have perms, lol")
 
     @commands.command()
     async def ban(self, ctx, u: discord.User = None, reason=None):
