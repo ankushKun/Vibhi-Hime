@@ -11,8 +11,6 @@ developed by : weeblet~kun#1193
     - **unban**
     - **kick**
     - **clear**
-    - **announce** sends a dm to all members of a guild
-    - **dm** sends a dm to the mentioned user
 - **ROLEPLAY**
     - **bite, dance, kill, run, laugh, cry, punch, nosebleed, clap** *and many more*
 - **FUN**
@@ -38,7 +36,6 @@ developed by : weeblet~kun#1193
     - **join**    makes Vibhi join a Voice Channel
     - **now**     shows currently playing song
     - **queue**   shoes the song queue
-    - **shuffle** shuffles the queue
     - **skip**    skips a song
 - **UTILITIES**
     - **wiki**  search the wikipedia
