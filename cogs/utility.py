@@ -68,9 +68,13 @@ class Utility(commands.Cog):
     @commands.command()
     async def stats(self, ctx):
         emb = discord.Embed(title="**Vibhi STATS**", color=0xFF0055)
+        mc = 0
+        for s in self.bot.guilds:
+            mc += s.member_count
         emb.add_field(
             name="Total Servers", value=str(len(self.bot.guilds)), inline=False
         )
+        emb.add_field(name="Total Members", value=str(mc), inline=False)
         emb.add_field(
             name="Latency(s)",
             value=str(round(self.bot.latency, 3) * 1000),
@@ -79,14 +83,14 @@ class Utility(commands.Cog):
         emb.add_field(
             name=f"{ctx.guild} members", value=f"{ctx.guild.member_count}", inline=False
         )
-
         await ctx.send(embed=emb)
 
     @commands.is_owner()
     @commands.command()
     async def servers(self, ctx):
-        server_per_page = 10
+        server_per_page = 20
         svr = self.bot.guilds
+        mem_count = 0
         embeds = []
         for i in range(0, len(svr), server_per_page):
             emb = discord.Embed(title=f"**Vibhi SERVERS [{len(svr)}]**", color=0xFF0055)
@@ -98,11 +102,18 @@ class Utility(commands.Cog):
                         value=f"members : {svr[j].member_count}",
                         inline=False,
                     )
+                    mem_count += svr[j].member_count
                 except:
                     break
                 j += 1
             embeds.append(emb)
 
+        front = discord.Embed(
+            title=f"**Vibhi Server Stats**",
+            description=f"Total Servers : **{len(svr)}**\nTotal members : **{mem_count}**\n\ndisplaying 20 servers per page",
+            color=0xFF0055,
+        )
+        embeds = [front] + embeds
         paginator = BotEmbedPaginator(ctx, embeds)
         await paginator.run()
 
