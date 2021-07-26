@@ -15,7 +15,7 @@ class Utility(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(aliases=["im", "img", "pic"])
+    # @commands.command(aliases=["im", "img", "pic"])
     async def image(self, ctx, *, msg):
         async with ctx.typing():
             query = msg
