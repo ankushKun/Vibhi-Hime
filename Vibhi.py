@@ -1,5 +1,5 @@
 import discord
-from discord.ext import commands
+from discord.ext import commands, tasks
 import os
 from decouple import config
 from discord.ext.tasks import loop
@@ -35,34 +35,40 @@ def load_cogs():
                 print(f"COG LOAD ERROR : {e}")
 
 
-@loop(seconds=240)
-async def presence_change():
-    await bot.change_presence(
-        activity=discord.Activity(
-            type=discord.ActivityType.watching,
-            name="https://Vibhi.me\n\nWebsite made by my senpai <3",
-        )
-    )
-    await sleep(60)
-    await bot.change_presence(
-        activity=discord.Activity(
-            type=discord.ActivityType.watching, name="Anime with weeblet senpai"
-        )
-    )
-    await sleep(60)
-    await bot.change_presence(
-        activity=discord.Activity(
-            type=discord.ActivityType.listening, name="Anime Openings"
-        )
-    )
-    await sleep(60)
-    await bot.change_presence(
-        activity=discord.Activity(
-            type=discord.ActivityType.playing, name="with weeblet~kun <3"
-        )
-    )
-    await sleep(60)
+#@loop(seconds=240)
+#async def presence_change():
+    #await bot.change_presence(
+        #activity=discord.Activity(
+            #type=discord.ActivityType.watching,
+            #name="https://Vibhi.me\n\nWebsite made by my senpai <3",
+        #)
+    #)
+    #await sleep(60)
+    #await bot.change_presence(
+        #activity=discord.Activity(
+            #type=discord.ActivityType.watching, name="Anime with weeblet senpai"
+        #)
+    #)
+    #await sleep(60)
+    #await bot.change_presence(
+        #activity=discord.Activity(
+            #type=discord.ActivityType.listening, name="Anime Openings"
+        #)
+    #)
+    #await sleep(60)
+    #await bot.change_presence(
+        #activity=discord.Activity(
+            #type=discord.ActivityType.playing, name="with weeblet~kun <3"
+        #)
+    #)
+    #await sleep(60)
 
+@tasks.loop(seconds=2)
+async def switchpresence():
+  await bot.wait_until_ready()
+  sm = [f"{len(bot.guilds)} Servers!", f"{len(bot.users)} Users!"]
+  ast = random.choice(sm)
+  await bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name=f"v!help & {ast}"))
 
 @bot.command(aliases=["reload"])
 @commands.is_owner()
@@ -101,5 +107,5 @@ async def on_ready():
     load_cogs()
     print("\n---> BOT is awake\n")
 
-
+switchpresence.start()
 bot.run(config("BOT_TOKEN"))
