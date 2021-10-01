@@ -3,7 +3,7 @@ from discord import message
 from discord.ext import commands
 import os
 import random
-from PIL import Image
+from PIL import Image, ImageSequence
 import requests
 from io import BytesIO
 from math import *
@@ -48,7 +48,41 @@ class Misc(commands.Cog):
         #await ctx.send(file=file)
         os.system(f"rm -rf images/generated/{ctx.author.id}.png")
     """
-
+    
+    @commands.command(aliases=['bn', 'bnr'])
+    async def banner(self, ctx, mem: discord.User = None):
+        if mem == None:
+            mem = ctx.author
+        req = await self.client.http.request(discord.http.Route("GET", "/users/{uid}", uid=mem.id))
+        banner_id = req["banner"]
+        if banner_id:
+            banner_url = f"https://cdn.discordapp.com/banners/{mem.id}/{banner_id}?size=1024"
+        response = requests.get(banner_url)
+        img = Image.open(BytesIO(response.content))
+        if img.is_animated == True:
+            emb = discord.Embed(color=0x2e69f2)
+            framess = [frame.copy() for frame in ImageSequence.Iterator(img)]
+            framess[0].save('banner.gif',
+                            save_all=True, append_images=framess[1:],
+                            optimize=False, duration=100, loop=0)
+            file = discord.File("banner.gif")
+            emb.set_image(url="attachment://banner.gif")
+            #emb.set_footer(
+                #text=f"Kanna Chan",
+                #icon_url=kana.avatar_url,
+            #)
+            await ctx.send(embed=emb, file=file)
+        else:
+            emb = discord.Embed(color=0xFF0055)
+            img.save("banner.png")
+            file = discord.File("banner.png")
+            emb.set_image(url="attachment://banner.png")
+            #emb.set_footer(
+                #text=f"Kanna Chan",
+                #icon_url=kana.avatar_url,
+            #)
+            await ctx.send(embed=emb, file=file)
+    
     @commands.command(aliases=["av", "avatar"])
     async def pfp(self, ctx):
         members = ctx.message.mentions
@@ -238,6 +272,7 @@ class Misc(commands.Cog):
         # await ctx.send(file=file)
         os.system(f"rm -rf images/generated/{ctx.author.id}.png")
 
+        
 
 def setup(bot):
     bot.add_cog(Misc(bot))
