@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+import typing
 
 
 class Moderation(commands.Cog):
@@ -7,7 +8,9 @@ class Moderation(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def warn(self, ctx, u: discord.User, *, reason):
+    @commands.guild_only()
+    @commands.has_guild_permissions(manage_guild=True)
+    async def warn(self, ctx, u: typing.Union[discord.Member, discord.User], *, reason):
         if ctx.author.id == 666578281142812673:
             await ctx.message.delete()
             e = discord.Embed(
@@ -33,6 +36,8 @@ class Moderation(commands.Cog):
     #         await ctx.send(f"{u.mention} you dont have perms, lol")
 
     @commands.command(aliases=["clear"])
+    @commands.guild_only()
+    @commands.bot_has_permissions(manage_messages=True)
     async def cls(self, ctx, l):
         if ctx.message.author.guild_permissions.manage_messages:
             try:
@@ -54,7 +59,9 @@ class Moderation(commands.Cog):
     #         await ctx.send(f"{ctx.message.author.mention} you dont have perms, lol")
 
     @commands.command()
-    async def ban(self, ctx, u: discord.User = None, reason=None):
+    @commands.guild_only()
+    @commands.bot_has_permissions(ban_members=True)
+    async def ban(self, ctx, u: typing.Optional[typing.Union[discord.Member, discord.User]], reason=None):
         if ctx.message.author.guild_permissions.ban_members:
             if reason == None:
                 reason = "For being a jerk!"
@@ -73,6 +80,8 @@ class Moderation(commands.Cog):
             await ctx.send(f"{ctx.message.author.mention} you dont have the perms, lol")
 
     @commands.command()
+    @commands.guild_only()
+    @commands.bot_has_permissions(kick_members=True)
     async def kickout(self, ctx, u: discord.User = None, reason=None):
         if ctx.message.author.guild_permissions.kick_members:
             if reason == None:
@@ -92,6 +101,8 @@ class Moderation(commands.Cog):
             await ctx.send(f"{ctx.message.author.mention} you dont have the perms, lol")
 
     @commands.command()
+    @commands.guild_only()
+    @commands.bot_has_permissions(ban_members=True)
     async def unban(self, ctx, member=None, reason=None):
         if ctx.message.author.guild_permissions.ban_members:
             if reason == None:
