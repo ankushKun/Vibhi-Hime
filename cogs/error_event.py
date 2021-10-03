@@ -85,3 +85,4 @@ class CommandErrorHandler(commands.Cog):
 
 def setup(bot):
     bot.add_cog(CommandErrorHandler(bot))
+    print("---> ERROR HANDLER LOADED")
