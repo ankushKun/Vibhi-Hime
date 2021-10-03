@@ -1,6 +1,8 @@
 __pycache__
 
 .env
+venv
+.vscode
 
 
 anon_id.txt

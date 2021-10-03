@@ -3,6 +3,7 @@ from discord.ext import commands
 import os
 import random
 from time import sleep as delay
+from typing import Optional
 
 
 class Games(commands.Cog):
@@ -11,7 +12,7 @@ class Games(commands.Cog):
 
     #   ROCK PAPER SCISSOR
     @commands.command()
-    async def rps(self, ctx, player):
+    async def rps(self, ctx, player: Optional[str]):
         H = ["ROCK", "PAPER", "SCISSOR"]
         bot_ = random.choice(H)
         user = player.upper()
@@ -30,7 +31,7 @@ class Games(commands.Cog):
             else:
                 await ctx.send("bot wins")
         else:
-            await ctx.send("you noob\n``rock``  or  ``paper``  or  ``scissor``?")
+            await ctx.send("You noob\n``rock``  or  ``paper``  or  ``scissor``?")
 
     # COIN TOSS
     @commands.command()
